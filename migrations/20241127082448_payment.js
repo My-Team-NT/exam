@@ -9,7 +9,7 @@ export async function up(knex) {
         table.uuid("order_id").notNullable()
         table.integer("amount").notNullable()
         table
-            .enum("method", ["credit_card", "paypal", "bank_transfer"])
+            .enum("method", ["credit_card", "paypal", "cash"])
             .defaultTo("credit_card")
         table.enum("status", [true, false]).notNullable()
         table.timestamps(true, true)

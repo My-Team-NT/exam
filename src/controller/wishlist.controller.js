@@ -11,7 +11,7 @@ const responseHandler = (result, res) => {
 export const WishlistController = {
     create: async (req, res, next) => {
         try {
-            const data = req.body
+            const data = req.validatedWishlist
             const result = await WishlistService.create(data)
             responseHandler(result, res)
         } catch (error) {
@@ -21,8 +21,8 @@ export const WishlistController = {
     },
     getAll: async (req, res, next) => {
         try {
-            const page = req.query.page
-            const limit = req.query.limit
+            const page = req.query.page || 1
+            const limit = req.query.limit || 10
             const result = await WishlistService.getAll(page, limit)
             responseHandler(result, res)
         } catch (error) {
@@ -43,7 +43,7 @@ export const WishlistController = {
     update: async (req, res, next) => {
         try {
             const id = req.params.id
-            const data = req.body
+            const data = req.validatedWishlist
             const result = await WishlistService.update(id, data)
             responseHandler(result, res)
         } catch (error) {
