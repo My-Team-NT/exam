@@ -3,9 +3,9 @@ import { logger } from "../utils/logger.js"
 
 const responseHandler = (result, res) => {
     if (!result.success) {
-        return res.status(result.status).send(res.message)
+        return res.status(result.status).send(result.message)
     }
-    return res.status(result.status).send(res.message)
+    return res.status(result.status).send(result.message)
 }
 
 export const OrderController = {
