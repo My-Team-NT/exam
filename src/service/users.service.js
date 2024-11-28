@@ -2,7 +2,7 @@ import db from "../database/index.js"
 
 
 
-export const UserProfileService = (eamil) => {
+export const UserProfileService = (email) => {
     try {
         return db("users").select("*").where('email', "=", email)
     } catch (error) {

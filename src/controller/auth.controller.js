@@ -6,14 +6,52 @@ import {
     refreshTokenSing,
     sendMail,
 } from "../utils/index.js"
-import { v4 } from "uuid"
 import {
+    googleValidation,
     loginValidation,
     otpValidation,
     userValidation,
 } from "../validator/index.js"
-import { createOtp, createUserService, deleteOtpService, getOtpService, getUserByEmailService, updateUserService } from "../service/index.js"
+import {
+    createOtp,
+    createUserService,
+    deleteOtpService,
+    getOtpService,
+    getUserByEmailService,
+    updateUserService,
+} from "../service/index.js"
 
+export const googlePassportRegisterController = async (req, res, next) => {
+    try {
+        const { error } = googleValidation(req.body)
+        if (error) {
+            return res.status(400).send("Malumotlarni togri kiriting")
+        }
+        const { firstname, lastname, email, googleId } = req.user
+        const currentUser = await getUserEmailservice(email)
+        if (currentUser.length !== 0) {
+            return res.status(409).send("Bu eamil oldin ham royhatan otilgan")
+        }
+        const user = await createUserService({
+            firstname,
+            lastname,
+            email,
+            googleId,
+            is_active: true,
+        })
+        const payload = {
+            id: user[0].id,
+            sub: email,
+            role: user[0].role,
+        }
+        const accessToken = await accessTokenSing(payload)
+        const refreshToken = await refreshTokenSing(payload)
+
+        return res.status(200).send(accessToken, refreshToken)
+    } catch (error) {
+        next(error)
+    }
+}
 export const registerController = async (req, res, next) => {
     try {
         const { error } = userValidation(req.body)
@@ -36,12 +74,10 @@ export const registerController = async (req, res, next) => {
         )
         const hashPass = hashPassword(password)
         const user = await createUserService({
-            id: v4(),
             ...req.body,
             password: hashPass,
         })
         const otp_db = await createOtp({
-            id: v4(),
             user_id: user[0].id,
             otp_code: otp,
         })

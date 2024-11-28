@@ -6,12 +6,13 @@ const tableName = "users";
  */
 export async function up(knex) {
     await knex.schema.createTable(tableName, function (table) {
-        table.uuid("uuid").primary();
+        table.uuid("uuid").defaultTo(knex.raw("gen_random_uuid()")).primary();
         table.string("firstname").notNullable();
         table.string("lastname").notNullable();
         table.string("email").notNullable().unique();
-        table.string("password").notNullable();
+        table.string("password")
         table.string("phone").notNullable();
+        table.string("google_id").defaultTo('')
         table.date("birth_date").notNullable();
         table
             .enum("role", ["user", "Admin", "SupperAdmin"])
