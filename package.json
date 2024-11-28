@@ -5,7 +5,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "start:dev": "node --watch server.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,8 @@
     "nodemailer": "^6.9.16",
     "nodemon": "^3.1.7",
     "otp-generator": "^4.0.1",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "pg": "^8.13.1",
     "uuid": "^11.0.3",
     "winston": "^3.17.0"
