@@ -7,6 +7,5 @@ export const config = {
     ...email,
     ...jwt,
     ...port,
-    ...client
+    ...client,
 }
-

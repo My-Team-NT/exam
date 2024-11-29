@@ -9,6 +9,14 @@ categoryRouter.get("/filter", CategoryController.getFilter)
 categoryRouter.get("/search", CategoryController.getSearch)
 categoryRouter.get("/", CategoryController.getAll)
 categoryRouter.get("/:id", CategoryController.getById)
-categoryRouter.post("/",roleGuard("admin"),CategoryController.createCategory,)
-categoryRouter.put("/:id",roleGuard("admin"),CategoryController.updateCategory,)
-categoryRouter.delete("/:id",roleGuard("admin"),CategoryController.deleteCategory,)
+categoryRouter.post("/", roleGuard("admin"), CategoryController.createCategory)
+categoryRouter.put(
+    "/:id",
+    roleGuard("admin"),
+    CategoryController.updateCategory,
+)
+categoryRouter.delete(
+    "/:id",
+    roleGuard("admin"),
+    CategoryController.deleteCategory,
+)

@@ -14,6 +14,6 @@ export const sendMail = async (to, subject, html) => {
         from: config.eamil.user,
         to,
         subject,
-        html
+        html,
     })
 }

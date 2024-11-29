@@ -73,7 +73,7 @@ export const FeedBackController = {
                 return res.status(400).send("Malumotlarni Togri kiriting")
             }
             const feedback = await FeedBackService.createFeedBack(req.body)
-            return res.status(201).send({ status: "Created"})
+            return res.status(201).send({ status: "Created" })
         } catch (error) {
             logger.error(error)
             next(error)

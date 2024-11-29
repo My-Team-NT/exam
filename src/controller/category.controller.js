@@ -73,7 +73,7 @@ export const CategoryController = {
                 return res.status(400).send("Malumotlarni Togri kiriting")
             }
             const Category = await CategoryService.createCategory(req.body)
-            return res.status(201).send({ status: "Created"})
+            return res.status(201).send({ status: "Created" })
         } catch (error) {
             logger.error(error)
             next(error)

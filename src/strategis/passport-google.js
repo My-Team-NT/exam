@@ -5,27 +5,27 @@ import { config } from "../config/index.js"
 export default passport.use(
     new Strategy(
         {
-            clientID:config.client.id,
-            clientSecret:config.client.secret,
-            callbackURL:'http://localhost:3000/api/v1/auth/google/callback'
+            clientID: config.client.id,
+            clientSecret: config.client.secret,
+            callbackURL: "http://localhost:3000/api/v1/auth/google/callback",
         },
-        function (accessToken ,profile , done) {
-            const user = { 
+        function (accessToken, profile, done) {
+            const user = {
                 firstname: profile._json.given_name,
                 lastname: profile._json.family_name,
                 email: profile._json.email,
                 googleId: profile.id,
                 accessToken,
             }
-        return done(null , user)
-        }
-    )
+            return done(null, user)
+        },
+    ),
 )
 
 passport.serializeUser((user, done) => {
-    done(null , user)
+    done(null, user)
 })
 
 passport.deserializeUser((obj, done) => {
-    done(null , obj)
+    done(null, obj)
 })

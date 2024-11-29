@@ -9,6 +9,16 @@ feedbackRouter.get("/filter", FeedBackController.getFilter)
 feedbackRouter.get("/search", FeedBackController.getSearch)
 feedbackRouter.get("/", FeedBackController.getAll)
 feedbackRouter.get("/:id", FeedBackController.getById)
-feedbackRouter.post("/",authGuard ,FeedBackController.createFeedBack,)
-feedbackRouter.put("/:id",authGuard ,roleGuard("admin"),FeedBackController.updateFeedBack,)
-feedbackRouter.delete("/:id",authGuard , roleGuard("admin"),FeedBackController.deleteFeedBack,)
+feedbackRouter.post("/", authGuard, FeedBackController.createFeedBack)
+feedbackRouter.put(
+    "/:id",
+    authGuard,
+    roleGuard("admin"),
+    FeedBackController.updateFeedBack,
+)
+feedbackRouter.delete(
+    "/:id",
+    authGuard,
+    roleGuard("admin"),
+    FeedBackController.deleteFeedBack,
+)

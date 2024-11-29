@@ -6,6 +6,15 @@ import {
     categoryRouter,
     feedbackRouter,
     userRouter,
+    addressRouter,
+    cartRouter,
+    cartItemRouter,
+    eventRouter,
+    orderRouter,
+    paymentRouter,
+    promocodeRouter,
+    ticketRouter,
+    wishlistRouter,
 } from "./router/index.js"
 
 const app = express()
@@ -15,8 +24,17 @@ app.use(morgan("dev"))
 
 app.use("/auth", authRouter)
 app.use("/user", authGuard, userRouter)
+app.use("/address", authGuard, addressRouter)
+app.use("/cart", authGuard, cartRouter)
+app.use("/cartItem", authGuard, cartItemRouter)
 app.use("/feedback", authGuard, feedbackRouter)
 app.use("/category", authGuard, categoryRouter)
+app.use("/event", authGuard, eventRouter)
+app.use("/order", authGuard, orderRouter)
+app.use("/payment", authGuard, paymentRouter)
+app.use("/promocode", authGuard, promocodeRouter)
+app.use("/ticket", authGuard, ticketRouter)
+app.use("/wishlist", authGuard, wishlistRouter)
 
 app.use((err, req, res, next) => {
     if (err) return res.send(err.messages)

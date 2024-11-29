@@ -20,7 +20,7 @@ import {
     getUserByEmailService,
     updateUserService,
 } from "../service/index.js"
-import {logger} from '../utils/logger.js'
+import { logger } from "../utils/logger.js"
 
 export const googlePassportRegisterController = async (req, res, next) => {
     try {
@@ -69,12 +69,14 @@ export const registerController = async (req, res, next) => {
         sendMail(
             email,
             "OTP",
-            `<h1>
-              This Your otp: 
-              <h2 style="background: yellow;color: rgb(0, 0, 0);width: 7%;">${otp}</h2>
-              </h1>`,
+            `
+            <h1>
+                This Your otp: 
+                <h2 style="background: yellow;color: rgb(0, 0, 0);width: 7%;">${otp}</h2>
+            </h1>
+            `,
         )
-        const hashPass = hashPassword(password)
+        const hashPass = await hashPassword(password)
         const user = await createUserService({
             ...req.body,
             password: hashPass,
