@@ -1,4 +1,4 @@
-import { CartService } from "../service/cart.service.js"
+import { CartService } from "../service/carts.service.js"
 import { logger } from "../utils/logger.js"
 
 const responseHandler = (result, res) => {

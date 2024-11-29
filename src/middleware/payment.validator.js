@@ -1,4 +1,4 @@
-import { paymentValidate } from "../validator/order.validator.js"
+import { paymentValidate } from "../validator/payment.validator.js"
 
 export const validatePayment = (req, res, next) => {
     const { error, value } = paymentValidate(req.body)

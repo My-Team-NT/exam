@@ -1,7 +1,8 @@
+import knex from "knex"
 import { config } from "dotenv"
 config()
 
-export const db = knex({
+const db = knex({
     client: "pg",
     connection: {
         user: process.env.PG_USER,
@@ -11,3 +12,5 @@ export const db = knex({
         database: process.env.PG_DATABASE,
     },
 })
+
+export default db

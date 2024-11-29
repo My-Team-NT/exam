@@ -1,4 +1,4 @@
-import passport, { use } from "passport"
+import passport from "passport"
 import { Strategy } from "passport-google-oauth20"
 import { config } from "../config/index.js"
 

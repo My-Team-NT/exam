@@ -6,7 +6,7 @@ import {
     verifyTokenController,
 } from "../controller/index.js"
 import passport from "passport"
-import "../stratgis/possport-google.js"
+import "../strategies/passport-google.js"
 
 export const authRouter = Router()
 
