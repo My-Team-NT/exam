@@ -1,10 +1,8 @@
 import db from "../database/index.js"
 
-
-
 export const UserProfileService = (email) => {
     try {
-        return db("users").select("*").where('email', "=", email)
+        return db("users").select("*").where("email", "=", email)
     } catch (error) {
         throw new Error(error)
     }
@@ -52,11 +50,11 @@ export const getSearchUserService = (search) => {
 
 export const createUserService = (data) => {
     try {
-      return db("users").insert(data).returning("*");
+        return db("users").insert(data).returning("*")
     } catch (error) {
-      throw error;
+        throw error
     }
-  };
+}
 
 export const updateUserService = (id, data) => {
     try {

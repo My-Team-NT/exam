@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken"
 import { config } from "../../config/index.js"
+import { logger } from "../../utils/logger.js"
 
 export const authGuard = (req, res, next) => {
     try {
@@ -18,6 +19,7 @@ export const authGuard = (req, res, next) => {
             next()
         })
     } catch (error) {
+        logger.error(error)
         next(error)
     }
 }

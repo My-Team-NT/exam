@@ -8,12 +8,14 @@ import {
     updateUserService,
     UserProfileService,
 } from "../service/index.js"
+import { logger } from "../utils/logger.js"
 
 export const UserProfileController = async (req, res, next) => {
     try {
         const user = await UserProfileService(req.user.sub)
         return res.status(200).res({ status: "Success", data: user })
     } catch (error) {
+        logger.error(error)
         next(error)
     }
 }
@@ -22,6 +24,7 @@ export const getAllUserController = async (req, res, next) => {
         const AllData = await getAllUserService()
         return res.status(200).res({ status: "Success", data: AllData })
     } catch (error) {
+        logger.error(error)
         next(error)
     }
 }
@@ -34,6 +37,7 @@ export const getByIdUserController = async (req, res, next) => {
         }
         return res.status(200).res({ status: "Success", data: user })
     } catch (error) {
+        logger.error(error)
         next(error)
     }
 }
@@ -45,6 +49,7 @@ export const getPageUserController = async (req, res, next) => {
         const AllData = await getPageUserService(skip, limit)
         return res.status(200).res({ status: "Success", data: AllData })
     } catch (error) {
+        logger.error(error)
         next(error)
     }
 }
@@ -58,6 +63,7 @@ export const getFilterUserController = async (req, res, next) => {
         }
         return res.status(200).res({ status: "Success", data: user })
     } catch (error) {
+        logger.error(error)
         next(error)
     }
 }
@@ -71,6 +77,7 @@ export const getSearchUserController = async (req, res, next) => {
         }
         return res.status(200).res({ status: "Success", data: user })
     } catch (error) {
+        logger.error(error)
         next(error)
     }
 }
@@ -85,6 +92,7 @@ export const updateUserController = async (req, res, next) => {
         const newUser = await updateUserService(req.params.id, newUserData)
         return res.status(200).res({ status: "Success", id: newUser[0].id })
     } catch (error) {
+        logger.error(error)
         next(error)
     }
 }
@@ -98,6 +106,7 @@ export const deleteUserController = async (req, res, next) => {
         const deleteUser = await deleteUserService(req.params.id)
         return res.status(200).res({ status: "Success", id: deleteUser[0].id })
     } catch (error) {
+        logger.error(error)
         next(error)
     }
 }

@@ -20,6 +20,7 @@ import {
     getUserByEmailService,
     updateUserService,
 } from "../service/index.js"
+import {logger} from '../utils/logger.js'
 
 export const googlePassportRegisterController = async (req, res, next) => {
     try {
@@ -49,6 +50,7 @@ export const googlePassportRegisterController = async (req, res, next) => {
 
         return res.status(200).send(accessToken, refreshToken)
     } catch (error) {
+        logger.error(error)
         next(error)
     }
 }
@@ -83,6 +85,7 @@ export const registerController = async (req, res, next) => {
         })
         return res.status(201).send("Created")
     } catch (error) {
+        logger.error(error)
         next(error)
     }
 }
@@ -116,6 +119,7 @@ export const loginController = async (req, res, next) => {
 
         return res.status(200).send(accessToken, refreshToken)
     } catch (error) {
+        logger.error(error)
         next(error)
     }
 }
@@ -142,6 +146,7 @@ export const verifyTokenController = async (req, res, next) => {
         await updateUserService(currentUser[0].id, { is_active: true })
         return res.status(200).send("User Is Active")
     } catch (error) {
+        logger.error(error)
         next(error)
     }
 }

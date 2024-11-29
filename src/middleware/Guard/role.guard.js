@@ -1,3 +1,5 @@
+import { logger } from "../../utils/logger"
+
 export const roleGuard = (...roles) => {
     return async (req, res, next) => {
         try {
@@ -7,6 +9,7 @@ export const roleGuard = (...roles) => {
             }
             next()
         } catch (error) {
+            logger.error(error)
             next(error)
         }
     }

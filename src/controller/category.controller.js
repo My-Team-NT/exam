@@ -1,11 +1,13 @@
 import { CategoryService } from "../service/index.js"
 import { categoryValidation } from "../validator/index.js"
+import { logger } from "../utils/logger.js"
 export const CategoryController = {
     getAll: async (req, res, next) => {
         try {
             const AllData = await CategoryService.getAll()
             return res.status(200).send({ status: "Success", data: AllData })
         } catch (error) {
+            logger.error(error)
             next(error)
         }
     },
@@ -17,6 +19,7 @@ export const CategoryController = {
             }
             return res.status(200).send({ status: "Success", data: Category })
         } catch (error) {
+            logger.error(error)
             next(error)
         }
     },
@@ -30,6 +33,7 @@ export const CategoryController = {
             }
             return res.status(200).send({ status: "Success", data: Category })
         } catch (error) {
+            logger.error(error)
             next(error)
         }
     },
@@ -45,6 +49,7 @@ export const CategoryController = {
             }
             return res.status(200).send({ status: "Success", data: Category })
         } catch (error) {
+            logger.error(error)
             next(error)
         }
     },
@@ -57,6 +62,7 @@ export const CategoryController = {
             }
             return res.status(200).send({ status: "Success", data: Category })
         } catch (error) {
+            logger.error(error)
             next(error)
         }
     },
@@ -69,6 +75,7 @@ export const CategoryController = {
             const Category = await CategoryService.createCategory(req.body)
             return res.status(201).send({ status: "Created"})
         } catch (error) {
+            logger.error(error)
             next(error)
         }
     },
@@ -87,6 +94,7 @@ export const CategoryController = {
                 .status(200)
                 .send({ status: "Success", id: newCategory[0].id })
         } catch (error) {
+            logger.error(error)
             next(error)
         }
     },
@@ -103,6 +111,7 @@ export const CategoryController = {
                 .status(200)
                 .send({ status: "Success", id: deleteUser[0].id })
         } catch (error) {
+            logger.error(error)
             next(error)
         }
     },
