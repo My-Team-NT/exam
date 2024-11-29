@@ -1,4 +1,4 @@
-import { logger } from "../../utils/logger"
+import { logger } from "../../utils/index.js"
 
 export const roleGuard = (...roles) => {
     return async (req, res, next) => {
