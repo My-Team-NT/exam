@@ -21,6 +21,7 @@ import {
     updateUserService,
 } from "../service/index.js"
 import { logger } from "../utils/logger.js"
+import { cartItemRouter } from "../router/cart_item.routes.js"
 
 export const googlePassportRegisterController = async (req, res, next) => {
     try {
@@ -54,6 +55,7 @@ export const googlePassportRegisterController = async (req, res, next) => {
         next(error)
     }
 }
+
 export const registerController = async (req, res, next) => {
     try {
         const { error } = userValidation(req.body)
@@ -106,9 +108,13 @@ export const loginController = async (req, res, next) => {
         if (currentUser[0].is_active === false) {
             return res.status(403).send("User is No Active")
         }
-        const isEqual = comparePass(password, currentUser[0].password)
+        console.log(currentUser)
 
-        if (isEqual) {
+        const isEqual = await comparePass(password, currentUser[0].password)
+
+        console.log(isEqual)
+
+        if (!isEqual) {
             return res.status(403).send("Eamil Yoki Parol hato")
         }
         const payload = {
@@ -116,6 +122,8 @@ export const loginController = async (req, res, next) => {
             sub: email,
             role: currentUser[0].role,
         }
+
+        console.log(payload)
         const accessToken = await accessTokenSing(payload)
         const refreshToken = await refreshTokenSing(payload)
 

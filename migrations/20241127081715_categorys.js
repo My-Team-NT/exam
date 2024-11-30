@@ -1,4 +1,4 @@
-const tableName = "category"
+const tableName = "categories"
 
 /**
  * @param { import("knex").Knex } knex
@@ -6,7 +6,7 @@ const tableName = "category"
  */
 export async function up(knex) {
     await knex.schema.createTable(tableName, function (table) {
-        table.uuid("uuid").defaultTo(knex.raw("gen_random_uuid()")).primary()
+        table.uuid("id").defaultTo(knex.raw("gen_random_uuid()")).primary()
         table.string("name").notNullable()
         table.string("description").notNullable()
         table.string("tag").notNullable()

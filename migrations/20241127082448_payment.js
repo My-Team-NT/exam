@@ -5,7 +5,7 @@ const tableName = "payment"
  */
 export async function up(knex) {
     await knex.schema.createTable(tableName, function (table) {
-        table.uuid("uuid").defaultTo(knex.fn.uuid()).primary()
+        table.uuid("id").defaultTo(knex.fn.uuid()).primary()
         table.uuid("order_id").notNullable()
         table.integer("amount").notNullable()
         table

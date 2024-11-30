@@ -22,7 +22,7 @@ export async function up(knex) {
         table
             .foreign("user_id")
             .references("id")
-            .inTable("userss")
+            .inTable("users")
             .onDelete("CASCADE")
     })
 }
