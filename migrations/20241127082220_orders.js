@@ -5,7 +5,7 @@ const tableName = "order"
  */
 export async function up(knex) {
     await knex.schema.createTable(tableName, function (table) {
-        table.uuid("uuid").defaultTo(knex.fn.uuid()).primary()
+        table.uuid("id").defaultTo(knex.fn.uuid()).primary()
         table.uuid("user_id").notNullable()
         table.uuid("ticket_id").notNullable()
         table.integer("total_amount").notNullable()
@@ -19,7 +19,7 @@ export async function up(knex) {
         table
             .foreign("ticket_id")
             .references("id")
-            .inTable("ticket")
+            .inTable("tickets")
             .onDelete("CASCADE")
     })
 }

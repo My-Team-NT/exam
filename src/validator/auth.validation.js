@@ -33,7 +33,7 @@ export const googleValidation = (data) => {
 
 export const loginValidation = (data) => {
     const validation = Joi.object({
-        eamil: Joi.string()
+        email: Joi.string()
             .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
             .required(),
         password: Joi.string().required(),
