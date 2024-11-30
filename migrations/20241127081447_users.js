@@ -11,16 +11,15 @@ export async function up(knex) {
         table.string("lastname").notNullable()
         table.string("email").notNullable().unique()
         table.string("password")
-        table.string("phone").notNullable()
+        table.string("phone").notNullable().defaultTo("")
         table.string("google_id").defaultTo("")
-        table.date("birth_date").notNullable()
+        table.date("birth_date")
         table
             .enum("role", ["user", "admin", "superAdmin"])
             .notNullable()
             .defaultTo("user")
         table.boolean("is_active").defaultTo(false)
-        table.timestamp("created_at").defaultTo(knex.fn.now())
-        table.timestamp("updated_at").defaultTo(knex.fn.now())
+        table.timestamps(true, true)
     })
 }
 

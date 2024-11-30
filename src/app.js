@@ -22,7 +22,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan("dev"))
 
-app.use("/auth", authRouter)
+app.use("/api/v1/auth", authRouter)
 app.use("/user", authGuard, userRouter)
 app.use("/address", authGuard, addressRouter)
 app.use("/cart", authGuard, cartRouter)

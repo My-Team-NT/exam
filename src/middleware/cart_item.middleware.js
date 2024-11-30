@@ -1,4 +1,4 @@
-import { cartItemValidator } from '../validator/cart_item.validator.js'
+import { cartItemValidator } from "../validator/cart_item.validator.js"
 
 export const validateCartItem = (req, res, next) => {
     const { error, value } = cartItemValidator(req.body)

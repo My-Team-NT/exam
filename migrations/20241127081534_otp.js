@@ -13,6 +13,7 @@ export async function up(knex) {
             .references("id")
             .inTable("users")
             .onDelete("CASCADE")
+        table.string("email").notNullable()
         table.string("otp_code").notNullable()
         table
             .timestamp("expires_at")

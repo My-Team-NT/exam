@@ -33,7 +33,7 @@ export const FeedBackService = {
         try {
             return db("feedback")
                 .select("*")
-                .where("message", "ILIKE", `%${search}%`)
+                .where("type", "ILIKE", `%${search}%`)
         } catch (error) {
             throw error
         }

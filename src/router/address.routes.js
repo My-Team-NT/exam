@@ -5,8 +5,13 @@ import { roleGuard } from "../middleware/index.js"
 
 export const addressRouter = Router()
 
-addressRouter.get("/", roleGuard('admin'), AddressController.getAll)
+addressRouter.get("/", roleGuard("admin"), AddressController.getAll)
 addressRouter.get("/:id", AddressController.getOne)
 addressRouter.post("/", validateAddress, AddressController.create)
-addressRouter.put("/:id", roleGuard('admin'), validateAddress, AddressController.update)
-addressRouter.delete("/:id", roleGuard('admin'), AddressController.delete)
+addressRouter.put(
+    "/:id",
+    roleGuard("admin"),
+    validateAddress,
+    AddressController.update,
+)
+addressRouter.delete("/:id", roleGuard("admin"), AddressController.delete)

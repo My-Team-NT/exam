@@ -1,3 +1,3 @@
-import { hash } from "bcrypt";
+import { hash } from "bcrypt"
 
 console.log(await ha)

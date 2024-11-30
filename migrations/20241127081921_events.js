@@ -19,7 +19,7 @@ export async function up(knex) {
         table
             .foreign("category_id")
             .references("id")
-            .inTable("categories")
+            .inTable("categorys")
             .onDelete("CASCADE")
     })
 }

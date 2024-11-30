@@ -7,6 +7,16 @@ export const cartItemRouter = Router()
 
 cartItemRouter.get("/", CartItemController.getAll)
 cartItemRouter.get("/:id", CartItemController.getOne)
-cartItemRouter.post("/", roleGuard('admin'), validateCartItem, CartItemController.create)
-cartItemRouter.put("/:id",roleGuard('admin'), validateCartItem, CartItemController.update)
-cartItemRouter.delete("/:id", roleGuard('admin'), CartItemController.delete)
+cartItemRouter.post(
+    "/",
+    roleGuard("admin"),
+    validateCartItem,
+    CartItemController.create,
+)
+cartItemRouter.put(
+    "/:id",
+    roleGuard("admin"),
+    validateCartItem,
+    CartItemController.update,
+)
+cartItemRouter.delete("/:id", roleGuard("admin"), CartItemController.delete)

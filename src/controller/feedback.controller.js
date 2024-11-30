@@ -55,7 +55,7 @@ export const FeedBackController = {
     },
     getSearch: async (req, res, next) => {
         try {
-            const search = req.query.name || ""
+            const search = req.query.type || ""
             const feedback = await FeedBackService.getSearch(search)
             if (!feedback) {
                 return res.status(404).send("Malumot Topilmadi")
@@ -92,7 +92,7 @@ export const FeedBackController = {
             )
             return res
                 .status(200)
-                .send({ status: "Success", id: newFeedBack[0].id })
+                .send({ status: "Success", id: feedback[0].id })
         } catch (error) {
             logger.error(error)
             next(error)
@@ -109,7 +109,7 @@ export const FeedBackController = {
             )
             return res
                 .status(200)
-                .send({ status: "Success", id: deleteUser[0].id })
+                .send({ status: "Success", id: feedback[0].id })
         } catch (error) {
             logger.error(error)
             next(error)

@@ -72,7 +72,9 @@ export const CategoryController = {
             if (error) {
                 return res.status(400).send("Malumotlarni Togri kiriting")
             }
-            const Category = await CategoryService.createCategory(req.body)
+            const Category = await CategoryService.createcategory({
+                ...req.body,
+            })
             return res.status(201).send({ status: "Created" })
         } catch (error) {
             logger.error(error)
@@ -86,13 +88,13 @@ export const CategoryController = {
                 return res.status(404).send("Malumot Topilmadi")
             }
             const newDate = { ...Category[0], ...req.body }
-            const newCategory = await CategoryService.updateCategory(
+            const newCategory = await CategoryService.updatecategory(
                 req.params.id,
                 newDate,
             )
             return res
                 .status(200)
-                .send({ status: "Success", id: newCategory[0].id })
+                .send({ status: "Success", id: Category[0].id })
         } catch (error) {
             logger.error(error)
             next(error)
@@ -104,12 +106,12 @@ export const CategoryController = {
             if (!Category) {
                 return res.status(404).send("Malumot Topilmadi")
             }
-            const deleteUser = await CategoryService.deleteCategory(
+            const deleteUser = await CategoryService.deletecategory(
                 req.params.id,
             )
             return res
                 .status(200)
-                .send({ status: "Success", id: deleteUser[0].id })
+                .send({ status: "Success", id: Category[0].id })
         } catch (error) {
             logger.error(error)
             next(error)
