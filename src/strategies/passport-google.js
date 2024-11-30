@@ -9,13 +9,12 @@ export default passport.use(
             clientSecret: config.client.secret,
             callbackURL: "http://localhost:3000/api/v1/auth/google/callback",
         },
-        function (accessToken, profile, done) {
+        function (accessToken, refreshToken, profile, done) {
             const user = {
                 firstname: profile._json.given_name,
                 lastname: profile._json.family_name,
                 email: profile._json.email,
                 googleId: profile.id,
-                accessToken,
             }
             return done(null, user)
         },

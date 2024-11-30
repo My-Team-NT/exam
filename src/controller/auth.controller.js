@@ -26,7 +26,7 @@ import { logger } from "../utils/logger.js"
 
 export const googlePassportRegisterController = async (req, res, next) => {
     try {
-        const { error } = googleValidation(req.body)
+        const { error } = googleValidation(req.user)
         if (error) {
             return res.status(400).send("Malumotlarni togri kiriting")
         }
@@ -39,7 +39,7 @@ export const googlePassportRegisterController = async (req, res, next) => {
             firstname,
             lastname,
             email,
-            googleId,
+            google_id: googleId,
             is_active: true,
         })
         const payload = {
@@ -50,8 +50,9 @@ export const googlePassportRegisterController = async (req, res, next) => {
         const accessToken = await accessTokenSing(payload)
         const refreshToken = await refreshTokenSing(payload)
 
-        return res.status(200).send(accessToken, refreshToken)
+        return res.status(200).send({ accessToken, refreshToken })
     } catch (error) {
+        console.log(error)
         logger.error(error)
         next(error)
     }
@@ -86,6 +87,7 @@ export const registerController = async (req, res, next) => {
         })
         const otp_db = await createOtp({
             user_id: user[0].id,
+            email: user[0].email,
             otp_code: otp,
         })
         return res.status(201).send("Created")
@@ -109,11 +111,7 @@ export const loginController = async (req, res, next) => {
         if (currentUser[0].is_active === false) {
             return res.status(403).send("User is No Active")
         }
-        console.log(currentUser)
-
         const isEqual = await comparePass(password, currentUser[0].password)
-
-        console.log(isEqual)
 
         if (!isEqual) {
             return res.status(403).send("Eamil Yoki Parol hato")
@@ -124,7 +122,6 @@ export const loginController = async (req, res, next) => {
             role: currentUser[0].role,
         }
 
-        console.log(payload)
         const accessToken = await accessTokenSing(payload)
         const refreshToken = await refreshTokenSing(payload)
 
@@ -146,8 +143,9 @@ export const verifyTokenController = async (req, res, next) => {
         if (currentUser.length === 0) {
             return res.status(404).send("Malumot topilmadi")
         }
-        const currentOtp = await getOtpService(currentUser[0].id)
+        const currentOtp = await getOtpService(email)
         if (new Date() > currentOtp[0].expires_at) {
+            await deleteOtpService(currentOtp[0].id)
             return res.status(403).send("Sixni Otp Codingizni Vohti tuganag")
         }
         if (currentOtp[0].otp_code !== otp) {

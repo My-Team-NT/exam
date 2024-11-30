@@ -1,4 +1,4 @@
-const tableName = "categories"
+const tableName = "categorys"
 
 /**
  * @param { import("knex").Knex } knex
@@ -10,8 +10,7 @@ export async function up(knex) {
         table.string("name").notNullable()
         table.string("description").notNullable()
         table.string("tag").notNullable()
-        table.timestamp("created_at").defaultTo(knex.fn.now())
-        table.timestamp("updated_at").defaultTo(knex.fn.now())
+        table.timestamps(true, true)
     })
 }
 

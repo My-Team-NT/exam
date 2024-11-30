@@ -6,7 +6,7 @@ import { addressValidator } from "../validator/address.validator.js";
 
 export const addressRouter = Router()
 
-addressRouter.get("/", roleGuard('admin'), AddressController.getAll)
+addressRouter.get("/", roleGuard("admin"), AddressController.getAll)
 addressRouter.get("/:id", AddressController.getOne)
 addressRouter.post("/", validateRequest(addressValidator), AddressController.create)
 addressRouter.put("/:id", roleGuard('admin'), validateRequest(addressValidator), AddressController.update)

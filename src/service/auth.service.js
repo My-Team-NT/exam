@@ -6,7 +6,7 @@ export const createOtp = (data) => {
         throw error
     }
 }
-export const getOtpService = (user_id) => {
+export const getOtpService = (email) => {
     try {
         return db("otp").select("*").where("user_id", "=", user_id)
     } catch (error) {
@@ -16,7 +16,7 @@ export const getOtpService = (user_id) => {
 
 export const deleteOtpService = (id) => {
     try {
-        return db("otp").where("user_id", "=", id).del()
+        return db("otp").delete().where("id", "=", id)
     } catch (error) {
         throw error
     }

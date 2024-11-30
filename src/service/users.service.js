@@ -42,7 +42,9 @@ export const getFilterUserService = (name, value) => {
 
 export const getSearchUserService = (search) => {
     try {
-        return db("users").select("*").where("name", "ILIKE", `%${search}%`)
+        return db("users")
+            .select("*")
+            .where("firstname", "ILIKE", `%${search}%`)
     } catch (error) {
         throw new Error(error)
     }
