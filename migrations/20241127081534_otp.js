@@ -14,10 +14,6 @@ export async function up(knex) {
             .inTable("users")
             .onDelete("CASCADE")
         table.string("otp_code").notNullable()
-        table
-            .timestamp("expires_at")
-            .notNullable()
-            .defaultTo(knex.raw("now() + interval '10 minutes'"))
     })
 }
 

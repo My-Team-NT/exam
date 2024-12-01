@@ -2,11 +2,6 @@ import Joi from "joi"
 
 export const ticketValidator = (ticket) => {
     const schema = Joi.object({
-        id: Joi.string().uuid().required().messages({
-            "string.empty": "\"id\" bo'sh bo'lishi mumkin emas",
-            "string.uuid": '"id" UUID formatida bo\'lishi kerak',
-            "any.required": '"id" maydoni talab qilinadi',
-        }),
         event_id: Joi.string().uuid().required().messages({
             "string.empty": "\"eventid\" bo'sh bo'lishi mumkin emas",
             "string.uuid": '"eventid" UUID formatida bo\'lishi kerak',

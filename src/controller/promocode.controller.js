@@ -11,7 +11,7 @@ const responseHandler = (result, res) => {
 export const PromocodeController = {
     create: async (req, res, next) => {
         try {
-            const data = req.validatedPromocode
+            const data = req.validatedData
             const result = await PromocodeService.create(data)
             responseHandler(result, res)
         } catch (error) {
@@ -46,7 +46,7 @@ export const PromocodeController = {
     update: async (req, res, next) => {
         try {
             const id = req.params.id
-            const data = req.validatedPromocode
+            const data = req.validatedData
             const result = await PromocodeService.update(id, data)
             responseHandler(result, res)
         } catch (error) {

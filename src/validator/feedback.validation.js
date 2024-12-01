@@ -2,10 +2,26 @@ import Joi from "joi"
 
 export const feedbackValidation = (data) => {
     const validation = Joi.object({
-        user_id: Joi.number().required(),
-        type: Joi.string().min(2).required(),
-        message: Joi.string().required(),
-        status: Joi.string().required(),
+        user_id: Joi.string().max(255).required().messages({
+            "string.empty": `"user_id" bo'sh bo'lishi mumkin emas`,
+            "string.max": `"user_id" uzunligi 255 ta belgidan oshmasligi kerak`,
+            "any.required": `"user_id" maydoni talab qilinadi`,
+        }),
+        type: Joi.string().max(255).required().messages({
+            "string.empty": `"type" bo'sh bo'lishi mumkin emas`,
+            "string.max": `"type" uzunligi 255 ta belgidan oshmasligi kerak`,
+            "any.required": `"type" maydoni talab qilinadi`,
+        }),
+        message: Joi.string().max(255).required().messages({
+            "string.empty": `"message" bo'sh bo'lishi mumkin emas`,
+            "string.max": `"message" uzunligi 255 ta belgidan oshmasligi kerak`,
+            "any.required": `"message" maydoni talab qilinadi`,
+        }),
+        status: Joi.string().max(255).required().messages({
+            "string.empty": `"status" bo'sh bo'lishi mumkin emas`,
+            "string.max": `"status" uzunligi 255 ta belgidan oshmasligi kerak`,
+            "any.required": `"status" maydoni talab qilinadi`,
+        }),
     })
     return validation.validate(data)
 }

@@ -1,11 +1,12 @@
 import { Router } from "express"
 import { TicketController } from "../controller/ticket.controller.js"
-import { validateTicket } from "../middleware/ticket.middleware.js"
+import { validateRequest } from "../middleware/validate.middleware.js"
+import { ticketValidator } from "../validator/ticket.validator.js"
 
 export const ticketRouter = Router()
 
 ticketRouter.get("/getAll", TicketController.getAll)
 ticketRouter.get("/getOne/:id", TicketController.getOne)
-ticketRouter.post("/create", validateTicket, TicketController.create)
-ticketRouter.put("/update/:id", validateTicket, TicketController.update)
+ticketRouter.post("/create", validateRequest(ticketValidator), TicketController.create)
+ticketRouter.put("/update/:id", validateRequest(ticketValidator), TicketController.update)
 ticketRouter.delete("/delete/:id", TicketController.delete)

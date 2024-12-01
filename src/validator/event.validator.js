@@ -2,10 +2,6 @@ import Joi from "joi"
 
 export const eventValidator = (event) => {
     const schema = Joi.object({
-        id: Joi.number().integer().required().messages({
-            "number.base": '"id" butun son bolishi kerak',
-            "any.required": '"id" maydoni talab qilinadi',
-        }),
         name: Joi.string().max(255).required().messages({
             "string.empty": "\"name\" bo'sh bo'lishi mumkin emas",
             "string.max": '"name" uzunligi 255 ta belgidan oshmasligi kerak',

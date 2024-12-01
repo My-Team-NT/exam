@@ -2,11 +2,6 @@ import Joi from "joi"
 
 export const promocodeValidator = (promocode) => {
     const schema = Joi.object({
-        id: Joi.string().uuid().required().messages({
-            "string.empty": "\"id\" bo'sh bo'lishi mumkin emas",
-            "string.uuid": '"id" UUID formatida bo\'lishi kerak',
-            "any.required": '"id" maydoni talab qilinadi',
-        }),
         promocode: Joi.string().max(255).required().messages({
             "string.empty": "\"promocode\" bo'sh bo'lishi mumkin emas",
             "string.max":

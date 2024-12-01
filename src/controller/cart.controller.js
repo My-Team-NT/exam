@@ -11,7 +11,7 @@ const responseHandler = (result, res) => {
 export const CartController = {
     create: async (req, res, next) => {
         try {
-            const data = req.validatedCart
+            const data = req.validatedData
             const result = await CartService.create(data)
             responseHandler(result, res)
         } catch (error) {
@@ -43,7 +43,7 @@ export const CartController = {
     update: async (req, res, next) => {
         try {
             const id = req.params.id
-            const data = req.validatedCart
+            const data = req.validatedData
             const result = await CartService.update(id, data)
             responseHandler(result, res)
         } catch (error) {
