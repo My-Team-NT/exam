@@ -13,12 +13,6 @@ export async function up(knex) {
             .references("id")
             .inTable("users")
             .onDelete("CASCADE")
-        table
-            .uuid("event_id")
-            .notNullable()
-            .references("id")
-            .inTable("events")
-            .onDelete("CASCADE")
         table.string("type").notNullable()
         table.text("message").notNullable().unique()
         table.string("status").notNullable()
