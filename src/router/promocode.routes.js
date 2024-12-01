@@ -5,12 +5,16 @@ import { promocodeValidator } from "../validator/promocode.validator.js"
 
 export const promocodeRouter = Router()
 
-promocodeRouter.get("/getAll", PromocodeController.getAll)
-promocodeRouter.get("/getOne/:id", PromocodeController.getOne)
-promocodeRouter.post("/create", validateRequest(promocodeValidator), PromocodeController.create)
+promocodeRouter.get("/", PromocodeController.getAll)
+promocodeRouter.get("/:id", PromocodeController.getOne)
+promocodeRouter.post(
+    "/",
+    validateRequest(promocodeValidator),
+    PromocodeController.create,
+)
 promocodeRouter.put(
-    "/update/:id",
+    "/:id",
     validateRequest(promocodeValidator),
     PromocodeController.update,
 )
-promocodeRouter.delete("/delete/:id", PromocodeController.delete)
+promocodeRouter.delete("/:id", PromocodeController.delete)

@@ -8,7 +8,7 @@ export const validateRequest = (validationFunction) => (req, res, next) => {
             errors: error.details.map((err) => err.message),
         })
     }
-
+    
     req.validatedData = value
     next()
 }

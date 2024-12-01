@@ -5,8 +5,8 @@ import { paymentValidate } from "../validator/payment.validator.js"
 
 export const paymentRouter = Router()
 
-paymentRouter.get("/getAll", PaymentController.getAll)
-paymentRouter.get("/getOne", PaymentController.getOne)
-paymentRouter.post("/create", validateRequest(paymentValidate), PaymentController.create)
-paymentRouter.put("/update/:id", validateRequest(paymentValidate), PaymentController.update)
-paymentRouter.delete("/delete/:id", PaymentController.delete)
+paymentRouter.get("/", PaymentController.getAll)
+paymentRouter.get("/:id", PaymentController.getOne)
+paymentRouter.post("/", validateRequest(paymentValidate), PaymentController.create)
+paymentRouter.put("/:id", validateRequest(paymentValidate), PaymentController.update)
+paymentRouter.delete("/:id", PaymentController.delete)

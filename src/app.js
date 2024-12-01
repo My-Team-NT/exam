@@ -7,7 +7,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan("dev"))
 
-app.use("/api/v1",indexRouter)
+app.use("/api/v1", indexRouter)
 
 app.use((err, req, res, next) => {
     if (err) return res.send(err.messages)

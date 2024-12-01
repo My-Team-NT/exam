@@ -5,8 +5,8 @@ import { orderValidate } from "../validator/order.validator.js";
 
 export const orderRouter = Router()
 
-orderRouter.get("/getAll", OrderController.getAll)
-orderRouter.get("/getOne", OrderController.getOne)
-orderRouter.post("/create", validateRequest(orderValidate), OrderController.create)
-orderRouter.put("/update/:id", validateRequest(orderValidate), OrderController.update)
-orderRouter.delete("/delete/:id", OrderController.delete)
+orderRouter.get("/", OrderController.getAll)
+orderRouter.get("/:id", OrderController.getOne)
+orderRouter.post("/", validateRequest(orderValidate), OrderController.create)
+orderRouter.put("/:id", validateRequest(orderValidate), OrderController.update)
+orderRouter.delete("/:id", OrderController.delete)

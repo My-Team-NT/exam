@@ -5,8 +5,8 @@ import { wishlistValidate } from "../validator/wishlist.validator.js"
 
 export const wishlistRouter = Router()
 
-wishlistRouter.get("/getAll", WishlistController.getAll)
-wishlistRouter.get("/getOne", WishlistController.getOne)
-wishlistRouter.post("/create", validateRequest(wishlistValidate), WishlistController.create)
-wishlistRouter.put("/update/:id", validateRequest(wishlistValidate), WishlistController.update)
-wishlistRouter.delete("/delete/:id", WishlistController.delete)
+wishlistRouter.get("/", WishlistController.getAll)
+wishlistRouter.get("/:id", WishlistController.getOne)
+wishlistRouter.post("/", validateRequest(wishlistValidate), WishlistController.create)
+wishlistRouter.put("/:id", validateRequest(wishlistValidate), WishlistController.update)
+wishlistRouter.delete("/:id", WishlistController.delete)

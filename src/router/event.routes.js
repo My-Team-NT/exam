@@ -5,8 +5,8 @@ import { eventValidator } from "../validator/event.validator.js";
 
 export const eventRouter = Router()
 
-eventRouter.get("/getAll", EventController.getAll)
-eventRouter.get("/getOne/:id", EventController.getOne)
-eventRouter.post("/create", validateRequest( eventValidator ), EventController.create)
-eventRouter.put("/update/:id", validateRequest( eventValidator ), EventController.update)
-eventRouter.delete("/delete/:id", EventController.delete)
+eventRouter.get("/", EventController.getAll)
+eventRouter.get("/:id", EventController.getOne)
+eventRouter.post("", validateRequest( eventValidator ), EventController.create)
+eventRouter.put("/:id", validateRequest( eventValidator ), EventController.update)
+eventRouter.delete("/:id", EventController.delete)

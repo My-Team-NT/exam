@@ -11,17 +11,18 @@ import {
     loginValidation,
     otpValidation,
     userValidation,
-} from "../validator/index.js"
+} from "../validator/auth.validation.js"
+import {
+    createUserService,
+    updateUserService,
+} from "../service/users.service.js"
 import {
     createOtp,
-    createUserService,
     deleteOtpService,
     getOtpService,
     getUserByEmailService,
-    updateUserService,
-} from "../service/index.js"
+} from "../service/auth.service.js"
 import { logger } from "../utils/logger.js"
-import { cartItemRouter } from "../router/cart_item.routes.js"
 
 export const googlePassportRegisterController = async (req, res, next) => {
     try {
@@ -30,7 +31,7 @@ export const googlePassportRegisterController = async (req, res, next) => {
             return res.status(400).send("Malumotlarni togri kiriting")
         }
         const { firstname, lastname, email, googleId } = req.user
-        const currentUser = await getUserEmailservice(email)
+        const currentUser = await getUserByEmailService(email)
         if (currentUser.length !== 0) {
             return res.status(409).send("Bu eamil oldin ham royhatan otilgan")
         }
@@ -63,7 +64,7 @@ export const registerController = async (req, res, next) => {
             return res.status(400).send("Malumotlarni togri kiriting")
         }
         const { email, password } = req.body
-        const currentUser = await getUserEmailservice(email)
+        const currentUser = await getUserByEmailService(email)
         if (currentUser.length !== 0) {
             return res.status(409).send("Bu eamil oldin ham royhatan otilgan")
         }
@@ -127,7 +128,7 @@ export const loginController = async (req, res, next) => {
         const accessToken = await accessTokenSing(payload)
         const refreshToken = await refreshTokenSing(payload)
 
-        return res.status(200).send(accessToken, refreshToken)
+        return res.status(200).send({accessToken, refreshToken})
     } catch (error) {
         logger.error(error)
         next(error)

@@ -8,7 +8,7 @@ export const createOtp = (data) => {
 }
 export const getOtpService = (user_id) => {
     try {
-        return db("otp").insert("*").where("user_id", "=", user_id)
+        return db("otp").select("*").where("user_id", "=", user_id)
     } catch (error) {
         throw error
     }

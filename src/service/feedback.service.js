@@ -18,6 +18,7 @@ export const FeedBackService = {
                 message: res[0],
             }
         } catch (error) {
+            console.log(error.message)
             throw new Error(error)
         }
     },

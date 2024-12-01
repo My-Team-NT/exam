@@ -1,9 +1,10 @@
 import db from "../database/index.js"
 
-const tableName = "category"
+const tableName = "categories"
 export const CategoryService = {
     create: async (data) => {
         try {
+            console.log(data)
             const res = await db(tableName).insert(data).returning("*")
             if (!res || res.length == 0) {
                 return {
@@ -18,6 +19,7 @@ export const CategoryService = {
                 message: res[0],
             }
         } catch (error) {
+            console.log(error.message)
             throw new Error(error)
         }
     },
