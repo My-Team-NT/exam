@@ -12,7 +12,10 @@ export const OrderController = {
     create: async (req, res, next) => {
         try {
             const data = req.validatedData
-            const result = await OrderService.create(data)
+            const result = await OrderService.create({
+                user_id: req.user.id,
+                ...data,
+            })
             responseHandler(result, res)
         } catch (error) {
             logger.error(error)

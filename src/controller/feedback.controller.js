@@ -12,7 +12,10 @@ export const FeedBackController = {
     create: async (req, res, next) => {
         try {
             const data = req.validatedData
-            const result = await FeedBackService.create(data)
+            const result = await FeedBackService.create({
+                user_id: req.user.id,
+                ...data,
+            })
             responseHandler(result, res)
         } catch (error) {
             logger.error(error)

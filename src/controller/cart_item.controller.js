@@ -15,7 +15,7 @@ export const CartItemController = {
             const result = await CartItemService.create(data)
             responseHandler(result, res)
         } catch (error) {
-            logger.error(error)
+            logger.error(error.message)
             next(error)
         }
     },

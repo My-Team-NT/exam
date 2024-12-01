@@ -9,7 +9,7 @@ import {
     updateUserController,
     deleteUserController,
 } from "../controller/users.controller.js"
-import { roleGuard } from "../middleware/index.js"
+import { cheackMiddleware, roleGuard } from "../middleware/index.js"
 
 export const userRouter = express.Router()
 
@@ -19,5 +19,5 @@ userRouter.get("/filter", roleGuard("admin"), getFilterUserController)
 userRouter.get("/search", roleGuard("admin"), getSearchUserController)
 userRouter.get("/", roleGuard("admin"), getAllUserController)
 userRouter.get("/:id", roleGuard("admin"), getByIdUserController)
-userRouter.put("/:id", roleGuard("admin"), updateUserController)
+userRouter.put("/:id", cheackMiddleware, updateUserController)
 userRouter.delete("/:id", roleGuard("admin"), deleteUserController)

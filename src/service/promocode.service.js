@@ -4,6 +4,28 @@ const tableName = "promocode"
 export const PromocodeService = {
     create: async (data) => {
         try {
+            const ticket_id = await db("tickets")
+                .select("*")
+                .where("id", "=", data.ticket_id)
+                .first()
+            const user_id = await db("users")
+                .select("*")
+                .where("id", "=", data.user_id)
+                .first()
+
+            if (!ticket_id || ticket_id.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "ticket_id topilmadi",
+                }
+            } else if (!user_id || user_id.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "user_id topilmadi",
+                }
+            }
             const res = await db(tableName).insert(data).returning("*")
             if (!res || res.length == 0) {
                 return {

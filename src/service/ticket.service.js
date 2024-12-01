@@ -4,6 +4,18 @@ const tableName = "tickets"
 export const TicketService = {
     create: async (data) => {
         try {
+            const event_id = await db("events")
+                .select("*")
+                .where("id", "=", data.event_id)
+                .first()
+
+            if (!event_id || event_id.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "event_id topilmadi",
+                }
+            }
             const res = await db(tableName).insert(data).returning("*")
             if (!res || res.length == 0) {
                 return {
