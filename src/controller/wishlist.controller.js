@@ -12,7 +12,10 @@ export const WishlistController = {
     create: async (req, res, next) => {
         try {
             const data = req.validatedData
-            const result = await WishlistService.create(data)
+            const result = await WishlistService.create({
+                user_id: req.user.id,
+                ...data,
+            })
             responseHandler(result, res)
         } catch (error) {
             logger.error(error)

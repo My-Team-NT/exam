@@ -4,6 +4,30 @@ const tableName = "cart_item"
 export const CartItemService = {
     create: async (data) => {
         try {
+            const cart_id = await db("carts")
+                .select("*")
+                .where("id", "=", data.cart_id)
+                .first()
+
+            const ticket_id = await db("tickets")
+                .select("*")
+                .where("id", "=", data.ticket_id)
+                .first()
+
+            if (!cart_id || cart_id.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "cart_id topilmadi",
+                }
+            } else if (!ticket_id || ticket_id.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "cart_id topilmadi",
+                }
+            }
+
             const res = await db(tableName).insert(data).returning("*")
             if (!res || res.length == 0) {
                 return {

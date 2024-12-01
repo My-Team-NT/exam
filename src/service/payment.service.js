@@ -4,6 +4,18 @@ const tableName = "payment"
 export const PaymentService = {
     create: async (data) => {
         try {
+            const order_id = await db("order")
+                .select("*")
+                .where("id", "=", data.order_id)
+                .first()
+
+            if (!order_id || order_id.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "order_id topilmadi",
+                }
+            }
             const res = await db(tableName).insert(data).returning("*")
             if (!res || res.length == 0) {
                 return {

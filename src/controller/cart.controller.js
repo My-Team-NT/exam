@@ -12,7 +12,10 @@ export const CartController = {
     create: async (req, res, next) => {
         try {
             const data = req.validatedData
-            const result = await CartService.create(data)
+            const result = await CartService.create({
+                user_id: req.user.id,
+                ...data,
+            })
             responseHandler(result, res)
         } catch (error) {
             logger.error(error)

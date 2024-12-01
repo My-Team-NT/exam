@@ -4,6 +4,18 @@ const tableName = "events"
 export const EventService = {
     create: async (data) => {
         try {
+            const category_id = await db("categorys")
+                .select("*")
+                .where("id", "=", data.category_id)
+                .first()
+
+            if (!category_id || category_id.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "category_id topilmadi",
+                }
+            }
             const res = await db(tableName).insert(data).returning("*")
             if (!res || res.length == 0) {
                 return {

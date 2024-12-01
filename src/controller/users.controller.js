@@ -8,6 +8,7 @@ import {
     updateUserService,
     UserProfileService,
 } from "../service/users.service.js"
+import { hashPassword } from "../utils/index.js"
 import { logger } from "../utils/logger.js"
 
 export const UserProfileController = async (req, res, next) => {
@@ -88,8 +89,14 @@ export const updateUserController = async (req, res, next) => {
         if (!user) {
             return res.status(404).send("Malumot Topilmadi")
         }
-        const newUserData = { ...user[0], ...req.body }
-        const newUser = await updateUserService(req.params.id, newUserData)
+        if (req.body.password) {
+            const hashPass = await hashPassword(req.body.password)
+            const newUserData = { ...user[0], ...req.body, password: hashPass }
+            const newUser = await updateUserService(req.params.id, newUserData)
+        } else {
+            const newUserData = { ...user[0], ...req.body }
+            const newUser = await updateUserService(req.params.id, newUserData)
+        }
         return res.status(200).send({ status: "Success", id: req.params.id })
     } catch (error) {
         logger.error(error)
