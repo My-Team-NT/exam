@@ -125,7 +125,7 @@ export const loginController = async (req, res, next) => {
         const accessToken = await accessTokenSing(payload)
         const refreshToken = await refreshTokenSing(payload)
 
-        return res.status(200).send({accessToken, refreshToken})
+        return res.status(200).send({ accessToken, refreshToken })
     } catch (error) {
         logger.error(error)
         next(error)

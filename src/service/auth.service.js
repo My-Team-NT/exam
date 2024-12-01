@@ -8,7 +8,7 @@ export const createOtp = (data) => {
 }
 export const getOtpService = (email) => {
     try {
-        return db("otp").select("*").where("user_id", "=", user_id)
+        return db("otp").select("*").where("email", "=", email)
     } catch (error) {
         throw error
     }
