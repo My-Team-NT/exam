@@ -1,6 +1,6 @@
 import db from "../database/index.js"
 
-const tableName = "event"
+const tableName = "events"
 export const EventService = {
     create: async (data) => {
         try {

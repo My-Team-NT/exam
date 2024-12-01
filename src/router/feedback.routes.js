@@ -1,24 +1,21 @@
 import express from "express"
-import { FeedBackController } from "../controller/index.js"
-import { roleGuard, authGuard } from "../middleware/index.js"
+import { FeedBackController } from "../controller/feedback.controller.js"
+import { roleGuard, validateRequest } from "../middleware/index.js"
+import { feedbackValidation } from "../validator/feedback.validation.js"
 
 export const feedbackRouter = express.Router()
 
-feedbackRouter.get("/page", FeedBackController.getPage)
-feedbackRouter.get("/filter", FeedBackController.getFilter)
-feedbackRouter.get("/search", FeedBackController.getSearch)
 feedbackRouter.get("/", FeedBackController.getAll)
-feedbackRouter.get("/:id", FeedBackController.getById)
-feedbackRouter.post("/", authGuard, FeedBackController.createFeedBack)
+feedbackRouter.get("/:id", FeedBackController.getOne)
+feedbackRouter.post(
+    "/",
+    validateRequest(feedbackValidation),
+    FeedBackController.create,
+)
 feedbackRouter.put(
     "/:id",
-    authGuard,
     roleGuard("admin"),
-    FeedBackController.updateFeedBack,
+    validateRequest(feedbackValidation),
+    FeedBackController.update,
 )
-feedbackRouter.delete(
-    "/:id",
-    authGuard,
-    roleGuard("admin"),
-    FeedBackController.deleteFeedBack,
-)
+feedbackRouter.delete("/:id", roleGuard("admin"), FeedBackController.delete)

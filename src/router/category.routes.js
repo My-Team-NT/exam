@@ -1,22 +1,22 @@
 import express from "express"
-import { CategoryController } from "../controller/index.js"
-import { roleGuard } from "../middleware/index.js"
+import { CategoryController } from "../controller/category.controller.js"
+import { roleGuard, validateRequest } from "../middleware/index.js"
+import { categoryValidation } from "../validator/category.validation.js"
 
 export const categoryRouter = express.Router()
 
-categoryRouter.get("/page", CategoryController.getPage)
-categoryRouter.get("/filter", CategoryController.getFilter)
-categoryRouter.get("/search", CategoryController.getSearch)
 categoryRouter.get("/", CategoryController.getAll)
-categoryRouter.get("/:id", CategoryController.getById)
-categoryRouter.post("/", roleGuard("admin"), CategoryController.createCategory)
+categoryRouter.get("/:id", CategoryController.getOne)
+categoryRouter.post(
+    "/",
+    roleGuard("admin"),
+    validateRequest(categoryValidation),
+    CategoryController.create,
+)
 categoryRouter.put(
     "/:id",
     roleGuard("admin"),
-    CategoryController.updateCategory,
+    validateRequest(categoryValidation),
+    CategoryController.update,
 )
-categoryRouter.delete(
-    "/:id",
-    roleGuard("admin"),
-    CategoryController.deleteCategory,
-)
+categoryRouter.delete("/:id", roleGuard("admin"), CategoryController.delete)

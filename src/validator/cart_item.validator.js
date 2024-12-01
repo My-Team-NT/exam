@@ -2,11 +2,6 @@ import Joi from "joi"
 
 export const cartItemValidator = (cartItem) => {
     const schema = Joi.object({
-        id: Joi.number().integer().required().messages({
-            "number.base": '"id" butun son bo\'lishi kerak',
-            "number.integer": '"id" butun son bo\'lishi kerak',
-            "any.required": '"id" maydoni talab qilinadi',
-        }),
         cart_id: Joi.string().uuid().required().messages({
             "string.empty": "\"cart_id\" bo'sh bo'lishi mumkin emas",
             "string.uuid": '"cart_id" UUID formatida bo\'lishi kerak',

@@ -11,7 +11,7 @@ const responseHandler = (result, res) => {
 export const EventController = {
     create: async (req, res, next) => {
         try {
-            const data = req.validatedEvent
+            const data = req.validatedData
             const result = await EventService.create(data)
             responseHandler(result, res)
         } catch (error) {
@@ -46,7 +46,7 @@ export const EventController = {
     update: async (req, res, next) => {
         try {
             const id = req.params.id
-            const data = req.validatedEvent
+            const data = req.validatedData
             const result = await EventService.update(id, data)
             responseHandler(result, res)
         } catch (error) {

@@ -11,7 +11,7 @@ const responseHandler = (result, res) => {
 export const OrderController = {
     create: async (req, res, next) => {
         try {
-            const data = req.validatedOrder
+            const data = req.validatedData
             const result = await OrderService.create(data)
             responseHandler(result, res)
         } catch (error) {
@@ -43,7 +43,7 @@ export const OrderController = {
     update: async (req, res, next) => {
         try {
             const id = req.params.id
-            const data = req.validatedOrder
+            const data = req.validatedData
             const result = await OrderService.update(id, data)
             responseHandler(result, res)
         } catch (error) {

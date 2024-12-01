@@ -7,7 +7,7 @@ import {
     getSearchUserService,
     updateUserService,
     UserProfileService,
-} from "../service/index.js"
+} from "../service/users.service.js"
 import { logger } from "../utils/logger.js"
 
 export const UserProfileController = async (req, res, next) => {

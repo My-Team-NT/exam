@@ -1,15 +1,20 @@
 import { Router } from "express"
 import { PromocodeController } from "../controller/promocode.controller.js"
-import { validatePromocode } from "../middleware/promocode.middleware.js"
+import { validateRequest } from "../middleware/validate.middleware.js"
+import { promocodeValidator } from "../validator/promocode.validator.js"
 
 export const promocodeRouter = Router()
 
-promocodeRouter.get("/getAll", PromocodeController.getAll)
-promocodeRouter.get("/getOne/:id", PromocodeController.getOne)
-promocodeRouter.post("/create", validatePromocode, PromocodeController.create)
+promocodeRouter.get("/", PromocodeController.getAll)
+promocodeRouter.get("/:id", PromocodeController.getOne)
+promocodeRouter.post(
+    "/",
+    validateRequest(promocodeValidator),
+    PromocodeController.create,
+)
 promocodeRouter.put(
-    "/update/:id",
-    validatePromocode,
+    "/:id",
+    validateRequest(promocodeValidator),
     PromocodeController.update,
 )
-promocodeRouter.delete("/delete/:id", PromocodeController.delete)
+promocodeRouter.delete("/:id", PromocodeController.delete)

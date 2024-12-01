@@ -1,62 +1,111 @@
 import db from "../database/index.js"
 
+const tableName = "feedback"
 export const FeedBackService = {
-    getAll: async () => {
+    create: async (data) => {
         try {
-            return db("feedback").select("*")
+            const res = await db(tableName).insert(data).returning("*")
+            if (!res || res.length == 0) {
+                return {
+                    success: false,
+                    status: 500,
+                    message: "FeedBackni databasega qo'shib bo'lmadi",
+                }
+            }
+            return {
+                success: true,
+                status: 200,
+                message: res[0],
+            }
         } catch (error) {
-            throw error
+            console.log(error.message)
+            throw new Error(error)
         }
     },
-    getById: async (id) => {
+    getAll: async (page, limit) => {
         try {
-            return db("feedback").select("*").where("id", "=", id)
-        } catch (error) {
-            throw error
-        }
-    },
-    getPage: async (page, limit) => {
-        try {
-            return db("feedback").select("*").limit(limit).offset(page)
-        } catch (error) {
-            throw error
-        }
-    },
-    getFilter: async (name, value) => {
-        try {
-            return db("feedback").select("*").where(name, "=", value)
-        } catch (error) {
-            throw error
-        }
-    },
-    getSearch: async (search) => {
-        try {
-            return db("feedback")
+            const offset = (page - 1) * limit
+            const res = await db(tableName)
                 .select("*")
-                .where("type", "ILIKE", `%${search}%`)
+                .limit(limit)
+                .offset(offset)
+            if (!res || res.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "FeedBack lar topilmadi",
+                }
+            }
+            return {
+                success: true,
+                status: 200,
+                message: res,
+            }
         } catch (error) {
-            throw error
+            throw new Error(error)
         }
     },
-    createFeedBack: async (data) => {
+    getOne: async (id) => {
         try {
-            return db("feedback").insert(data).returning("*")
+            const res = await db(tableName).select("*").where("id", "=", id)
+            if (!res || res.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "FeedBack topilmadi",
+                }
+            }
+            return {
+                success: true,
+                status: 200,
+                message: res[0],
+            }
         } catch (error) {
-            throw error
+            throw new Error(error)
         }
     },
-    updateFeedBack: async (id, data) => {
+    update: async (id, data) => {
         try {
-            return db("feedback").where("id", "=", id).update(data)
+            const res = await db(tableName)
+                .update(data)
+                .where("id", "=", id)
+                .returning("*")
+            if (!res || res.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "FeedBack topilmadi",
+                }
+            }
+            return {
+                success: true,
+                status: 200,
+                message: res[0],
+            }
         } catch (error) {
-            throw error
+            throw new Error(error)
         }
     },
-    deleteFeedBack: async (id) => {
+    delete: async (id) => {
         try {
-            return db("feedback").where("id", "=", id).del()
+            const res = await db(tableName)
+                .delete()
+                .where("id", "=", id)
+                .returning("*")
+            if (!res || res.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "FeedBack topilmadi",
+                }
+            }
+            return {
+                success: true,
+                status: 200,
+                message: res[0],
+            }
         } catch (error) {
-            throw error
+            throw new Error(error)
         }
     },
 }

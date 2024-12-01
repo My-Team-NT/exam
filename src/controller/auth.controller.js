@@ -11,17 +11,18 @@ import {
     loginValidation,
     otpValidation,
     userValidation,
-} from "../validator/index.js"
+} from "../validator/auth.validation.js"
+import {
+    createUserService,
+    updateUserService,
+} from "../service/users.service.js"
 import {
     createOtp,
-    createUserService,
     deleteOtpService,
     getOtpService,
     getUserByEmailService,
-    updateUserService,
-} from "../service/index.js"
+} from "../service/auth.service.js"
 import { logger } from "../utils/logger.js"
-import { cartItemRouter } from "../router/cart_item.routes.js"
 
 export const googlePassportRegisterController = async (req, res, next) => {
     try {

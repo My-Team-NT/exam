@@ -4,7 +4,7 @@ import {
     loginController,
     registerController,
     verifyTokenController,
-} from "../controller/index.js"
+} from "../controller/auth.controller.js"
 import passport from "passport"
 import "../strategies/passport-google.js"
 

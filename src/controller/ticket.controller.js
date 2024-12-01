@@ -11,7 +11,7 @@ const responseHandler = (result, res) => {
 export const TicketController = {
     create: async (req, res, next) => {
         try {
-            const data = req.validatedTicket
+            const data = req.validatedData
             const result = await TicketService.create(data)
             responseHandler(result, res)
         } catch (error) {
@@ -46,7 +46,7 @@ export const TicketController = {
     update: async (req, res, next) => {
         try {
             const id = req.params.id
-            const data = req.validatedTicket
+            const data = req.validatedData
             const result = await TicketService.update(id, data)
             responseHandler(result, res)
         } catch (error) {

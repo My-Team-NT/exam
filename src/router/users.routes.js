@@ -8,7 +8,7 @@ import {
     getSearchUserController,
     updateUserController,
     deleteUserController,
-} from "../controller/index.js"
+} from "../controller/users.controller.js"
 import { roleGuard } from "../middleware/index.js"
 
 export const userRouter = express.Router()

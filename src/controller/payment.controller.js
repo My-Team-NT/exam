@@ -11,7 +11,7 @@ const responseHandler = (result, res) => {
 export const PaymentController = {
     create: async (req, res, next) => {
         try {
-            const data = req.validatedPayment
+            const data = req.validatedData
             const result = await PaymentService.create(data)
             responseHandler(result, res)
         } catch (error) {
@@ -43,7 +43,7 @@ export const PaymentController = {
     update: async (req, res, next) => {
         try {
             const id = req.params.id
-            const data = req.validatedPayment
+            const data = req.validatedData
             const result = await PaymentService.update(id, data)
             responseHandler(result, res)
         } catch (error) {

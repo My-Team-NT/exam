@@ -1,117 +1,61 @@
-import { CategoryService } from "../service/index.js"
-import { categoryValidation } from "../validator/index.js"
+import { CategoryService } from "../service/category.service.js"
 import { logger } from "../utils/logger.js"
+
+const responseHandler = (result, res) => {
+    if (!result.success) {
+        return res.status(result.status).send(result.message)
+    }
+    return res.status(result.status).send(result.message)
+}
+
 export const CategoryController = {
+    create: async (req, res, next) => {
+        try {
+            const data = req.validatedData
+            const result = await CategoryService.create(data)
+            responseHandler(result, res)
+        } catch (error) {
+            logger.error(error)
+            next(error)
+        }
+    },
     getAll: async (req, res, next) => {
         try {
-            const AllData = await CategoryService.getAll()
-            return res.status(200).send({ status: "Success", data: AllData })
+            const page = req.query.page || 1
+            const limit = req.query.limit || 10
+            const result = await CategoryService.getAll(page, limit)
+            responseHandler(result, res)
         } catch (error) {
             logger.error(error)
             next(error)
         }
     },
-    getById: async (req, res, next) => {
+    getOne: async (req, res, next) => {
         try {
-            const Category = await CategoryService.getById(req.params.id)
-            if (!Category) {
-                return res.status(404).send("Malumot Topilmadi")
-            }
-            return res.status(200).send({ status: "Success", data: Category })
+            const id = req.params.id
+            const result = await CategoryService.getOne(id)
+            responseHandler(result, res)
         } catch (error) {
             logger.error(error)
             next(error)
         }
     },
-    getPage: async (req, res, next) => {
+    update: async (req, res, next) => {
         try {
-            const { page, limit } = req.query
-            const skip = (page - 1) * limit
-            const Category = await CategoryService.getPage(skip, limit)
-            if (!Category) {
-                return res.status(404).send("Malumot Topilmadi")
-            }
-            return res.status(200).send({ status: "Success", data: Category })
+            const id = req.params.id
+            const data = req.validatedData
+            const result = await CategoryService.update(id, data)
+            responseHandler(result, res)
         } catch (error) {
             logger.error(error)
             next(error)
         }
     },
-    getFilter: async (req, res, next) => {
+    delete: async (req, res, next) => {
         try {
-            const key = String(Object.keys(req.query)[0])
-            const Category = await CategoryService.getFilter(
-                key,
-                req.query[key],
-            )
-            if (!Category) {
-                return res.status(404).send("Malumot Topilmadi")
-            }
-            return res.status(200).send({ status: "Success", data: Category })
-        } catch (error) {
-            logger.error(error)
-            next(error)
-        }
-    },
-    getSearch: async (req, res, next) => {
-        try {
-            const search = req.query.name || ""
-            const Category = await CategoryService.getSearch(search)
-            if (!Category) {
-                return res.status(404).send("Malumot Topilmadi")
-            }
-            return res.status(200).send({ status: "Success", data: Category })
-        } catch (error) {
-            logger.error(error)
-            next(error)
-        }
-    },
-    createCategory: async (req, res, next) => {
-        try {
-            const { error } = categoryValidation(req.body)
-            if (error) {
-                return res.status(400).send("Malumotlarni Togri kiriting")
-            }
-            const Category = await CategoryService.createcategory({
-                ...req.body,
-            })
-            return res.status(201).send({ status: "Created" })
-        } catch (error) {
-            logger.error(error)
-            next(error)
-        }
-    },
-    updateCategory: async (req, res, next) => {
-        try {
-            const Category = await CategoryService.getById(req.params.id)
-            if (!Category) {
-                return res.status(404).send("Malumot Topilmadi")
-            }
-            const newDate = { ...Category[0], ...req.body }
-            const newCategory = await CategoryService.updatecategory(
-                req.params.id,
-                newDate,
-            )
-            return res
-                .status(200)
-                .send({ status: "Success", id: Category[0].id })
-        } catch (error) {
-            logger.error(error)
-            next(error)
-        }
-    },
-    deleteCategory: async (req, res, next) => {
-        try {
-            const Category = await CategoryService.getById(req.params.id)
-            if (!Category) {
-                return res.status(404).send("Malumot Topilmadi")
-            }
-            const deleteUser = await CategoryService.deletecategory(
-                req.params.id,
-            )
-            return res
-                .status(200)
-                .send({ status: "Success", id: Category[0].id })
+            const id = req.params.id
+            const result = await CategoryService.delete(id)
+            responseHandler(result, res)
         } catch (error) {
             logger.error(error)
             next(error)

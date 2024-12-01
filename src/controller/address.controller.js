@@ -11,7 +11,7 @@ const responseHandler = (result, res) => {
 export const AddressController = {
     create: async (req, res, next) => {
         try {
-            const data = req.validatedAddress
+            const data = req.validatedData
             const result = await AddressService.create(data)
             responseHandler(result, res)
         } catch (error) {
@@ -43,7 +43,7 @@ export const AddressController = {
     update: async (req, res, next) => {
         try {
             const id = req.params.id
-            const data = req.validatedAddress
+            const data = req.validatedData
             const result = await AddressService.update(id, data)
             responseHandler(result, res)
         } catch (error) {

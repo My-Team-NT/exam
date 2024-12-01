@@ -1,6 +1,6 @@
 import db from "../database/index.js"
 
-const tableName = "cart"
+const tableName = "carts"
 export const CartService = {
     create: async (data) => {
         try {
@@ -25,9 +25,9 @@ export const CartService = {
         try {
             const offset = (page - 1) * limit
             const res = await db(tableName)
-                .select("*")
-                .limit(limit)
-                .offset(offset)
+            .select("*")
+            .offset(offset)
+            .limit(limit)
             if (!res || res.length == 0) {
                 return {
                     success: false,
@@ -41,6 +41,7 @@ export const CartService = {
                 message: res,
             }
         } catch (error) {
+            // console.log(error.message)
             throw new Error(error)
         }
     },

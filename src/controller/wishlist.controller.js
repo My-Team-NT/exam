@@ -11,7 +11,7 @@ const responseHandler = (result, res) => {
 export const WishlistController = {
     create: async (req, res, next) => {
         try {
-            const data = req.validatedWishlist
+            const data = req.validatedData
             const result = await WishlistService.create(data)
             responseHandler(result, res)
         } catch (error) {
@@ -43,7 +43,7 @@ export const WishlistController = {
     update: async (req, res, next) => {
         try {
             const id = req.params.id
-            const data = req.validatedWishlist
+            const data = req.validatedData
             const result = await WishlistService.update(id, data)
             responseHandler(result, res)
         } catch (error) {

@@ -1,62 +1,112 @@
 import db from "../database/index.js"
 
+const tableName = "categories"
 export const CategoryService = {
-    getAll: async () => {
+    create: async (data) => {
         try {
-            return db("categorys").select("*")
+            console.log(data)
+            const res = await db(tableName).insert(data).returning("*")
+            if (!res || res.length == 0) {
+                return {
+                    success: false,
+                    status: 500,
+                    message: "Categoryni databasega qo'shib bo'lmadi",
+                }
+            }
+            return {
+                success: true,
+                status: 200,
+                message: res[0],
+            }
         } catch (error) {
-            throw error
+            console.log(error.message)
+            throw new Error(error)
         }
     },
-    getById: async (id) => {
+    getAll: async (page, limit) => {
         try {
-            return db("categorys").select("*").where("id", "=", id)
-        } catch (error) {
-            throw error
-        }
-    },
-    getPage: async (page, limit) => {
-        try {
-            return db("categorys").select("*").limit(limit).offset(page)
-        } catch (error) {
-            throw error
-        }
-    },
-    getFilter: async (name, value) => {
-        try {
-            return db("categorys").select("*").where(name, "=", value)
-        } catch (error) {
-            throw error
-        }
-    },
-    getSearch: async (search) => {
-        try {
-            return db("categorys")
+            const offset = (page - 1) * limit
+            const res = await db(tableName)
                 .select("*")
-                .where("name", "ILIKE", `%${search}%`)
+                .limit(limit)
+                .offset(offset)
+            if (!res || res.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "Category lar topilmadi",
+                }
+            }
+            return {
+                success: true,
+                status: 200,
+                message: res,
+            }
         } catch (error) {
-            throw error
+            throw new Error(error)
         }
     },
-    createcategory: async (data) => {
+    getOne: async (id) => {
         try {
-            return db("categorys").insert(data).returning("*")
+            const res = await db(tableName).select("*").where("id", "=", id)
+            if (!res || res.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "Category topilmadi",
+                }
+            }
+            return {
+                success: true,
+                status: 200,
+                message: res[0],
+            }
         } catch (error) {
-            throw error
+            throw new Error(error)
         }
     },
-    updatecategory: async (id, data) => {
+    update: async (id, data) => {
         try {
-            return db("categorys").where("id", "=", id).update(data)
+            const res = await db(tableName)
+                .update(data)
+                .where("id", "=", id)
+                .returning("*")
+            if (!res || res.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "Category topilmadi",
+                }
+            }
+            return {
+                success: true,
+                status: 200,
+                message: res[0],
+            }
         } catch (error) {
-            throw error
+            throw new Error(error)
         }
     },
-    deletecategory: async (id) => {
+    delete: async (id) => {
         try {
-            return db("categorys").where("id", "=", id).del()
+            const res = await db(tableName)
+                .delete()
+                .where("id", "=", id)
+                .returning("*")
+            if (!res || res.length == 0) {
+                return {
+                    success: false,
+                    status: 404,
+                    message: "Category topilmadi",
+                }
+            }
+            return {
+                success: true,
+                status: 200,
+                message: res[0],
+            }
         } catch (error) {
-            throw error
+            throw new Error(error)
         }
     },
 }
