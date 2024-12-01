@@ -14,7 +14,7 @@ import {
     paymentRouter,
     promocodeRouter,
     ticketRouter,
-    wishlistRouter,
+    wishlistRouter
 } from "./router/index.js"
 
 const app = express()

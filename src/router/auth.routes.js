@@ -24,4 +24,4 @@ authRouter.get(
 )
 authRouter.post("/register", registerController)
 authRouter.post("/login", loginController)
-authRouter.post("/vrifyToken", verifyTokenController)
+authRouter.post("/verifyToken", verifyTokenController)
