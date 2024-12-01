@@ -1,6 +1,6 @@
 import express from "express"
 import { FeedBackController } from "../controller/feedback.controller.js"
-import { roleGuard, validateRequest } from "../middleware/index.js"
+import { cheackMiddleware, roleGuard, validateRequest } from "../middleware/index.js"
 import { feedbackValidation } from "../validator/feedback.validation.js"
 
 export const feedbackRouter = express.Router()
@@ -14,7 +14,7 @@ feedbackRouter.post(
 )
 feedbackRouter.put(
     "/:id",
-    roleGuard("admin"),
+    cheackMiddleware,
     validateRequest(feedbackValidation),
     FeedBackController.update,
 )
