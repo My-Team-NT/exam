@@ -14,4 +14,16 @@ app.use((err, req, res, next) => {
     res.send("Not found")
 })
 
+
+process.on("uncaughtException", (err) => {
+    console.error("Kutilmagan xatolik:", err.message);
+    process.exit(1)
+});
+
+
+process.on("unhandledRejection", (reason, promise) => {
+    console.error("Promise bajarilmagan:", reason);
+    process.exit(1)
+});
+
 export default app
