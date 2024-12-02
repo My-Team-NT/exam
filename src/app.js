@@ -10,8 +10,8 @@ app.use(morgan("dev"))
 app.use("/api/v1", indexRouter)
 
 app.use((err, req, res, next) => {
-    if (err) return res.send(err.messages)
-    res.send("Not found")
+    if (err) return res.status(500).send(err.message)
+    res.status(404).send("Not found")
 })
 
 
