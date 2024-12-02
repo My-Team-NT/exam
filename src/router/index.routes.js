@@ -12,7 +12,8 @@ import {
     promocodeRouter, 
     ticketRouter, 
     userRouter, 
-    wishlistRouter 
+    wishlistRouter,
+    adminRouter 
 } from "./index.js";
 import { authGuard } from "../middleware/index.js";
 
@@ -32,3 +33,4 @@ indexRouter.use("/payment", authGuard, paymentRouter)
 indexRouter.use("/promocode", authGuard, promocodeRouter)
 indexRouter.use("/ticket", authGuard, ticketRouter)
 indexRouter.use("/wishlist", authGuard, wishlistRouter)
+indexRouter.use("/admin", authGuard, adminRouter)

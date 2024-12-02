@@ -1,16 +1,17 @@
 import db from "../database/index.js"
+import { hashPassword } from "../utils/index.js"
 
-const tableName = "categories"
-export const CategoryService = {
+const tableName = "users"
+export const AdminService = {
     create: async (data) => {
         try {
-            console.log(data)
+            data.password = await hashPassword(data.password)
             const res = await db(tableName).insert(data).returning("*")
             if (!res || res.length == 0) {
                 return {
                     success: false,
                     status: 500,
-                    message: "Categoryni databasega qo'shib bo'lmadi",
+                    message: "Adminni databasega qo'shib bo'lmadi",
                 }
             }
             return {
@@ -19,7 +20,6 @@ export const CategoryService = {
                 message: res[0],
             }
         } catch (error) {
-            console.log(error.message)
             throw new Error(error)
         }
     },
@@ -34,7 +34,7 @@ export const CategoryService = {
                 return {
                     success: false,
                     status: 404,
-                    message: "Category lar topilmadi",
+                    message: "Admin lar topilmadi",
                 }
             }
             return {
@@ -53,7 +53,7 @@ export const CategoryService = {
                 return {
                     success: false,
                     status: 404,
-                    message: "Category topilmadi",
+                    message: "Admin topilmadi",
                 }
             }
             return {
@@ -68,14 +68,14 @@ export const CategoryService = {
     update: async (id, data) => {
         try {
             const res = await db(tableName)
-                .update(data)
+                .update({role: "admin"})
                 .where("id", "=", id)
                 .returning("*")
             if (!res || res.length == 0) {
                 return {
                     success: false,
                     status: 404,
-                    message: "Category topilmadi",
+                    message: "User topilmadi",
                 }
             }
             return {
@@ -97,7 +97,7 @@ export const CategoryService = {
                 return {
                     success: false,
                     status: 404,
-                    message: "Category topilmadi",
+                    message: "User topilmadi",
                 }
             }
             return {
