@@ -21,7 +21,7 @@ export async function up(knex) {
             .onDelete("CASCADE")
         
         table.string("type").notNullable()
-        table.text("message").notNullable().unique()
+        table.text("message").notNullable()
         table.string("status").notNullable()
         table.timestamps(true, true)
     })

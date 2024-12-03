@@ -159,3 +159,108 @@ export const verifyTokenController = async (req, res, next) => {
         next(error)
     }
 }
+
+export const sendForgetPasswordOtpController = async (req, res, next) => {
+    try {
+        let email;
+        if (req.user && req.user.sub) {
+            email = req.user.sub
+        } else {
+            email = req.body.email
+        }
+        const currentUser = await getUserByEmailService(email)
+        if (!currentUser) {
+            return res.status(404).send({ msg: "Not Found" })
+        }
+        const otp = otpGenerate()
+        sendMail(
+            email,
+            "OTP",
+            `
+            <h1>
+                This Your otp: 
+                <h2 style="background: yellow;color: rgb(0, 0, 0);width: 7%;">${otp}</h2>
+            </h1>
+            `,
+        )
+        const otp_db = await createOtp({
+            user_id: currentUser[0].id,
+            email: email,
+            otp_code: otp,
+        })
+        req.session.confirumPassword = email
+        return res.status(200).send({ msg: "send Otp", redirect: "/verifyOtp" })
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+}
+
+export const verifyOtpController = async (req, res, next) => {
+    try {
+        if (!req.session.confirumPassword) {
+            return res.status(400).send({
+                msg: "Not Access",
+                redirect: "/send-forget-password-otp",
+            })
+        }
+        const { otp } = req.body
+        const currentOtp = await getOtpService(req.session.confirumPassword)
+        if (!currentOtp) {
+            return res.status(404).send("Otp code topilmadi")
+        }
+        if (otp !== currentOtp[0].otp_code) {
+            return res.status(400).send("Otp Xato! kiritilgan")
+        }
+        if (new Date() > currentOtp[0].expires_at) {
+            await deleteOtpService(currentOtp[0].id)
+            return res.status(403).send("Sixni Otp Codingizni Vohti tuganag")
+        }
+        req.session.verifiedEmail = req.session.confirumPassword
+        await deleteOtpService(currentOtp[0].id)
+        return res
+            .status(200)
+            .send({ msg: "sen Otp", redirect: "/forgetPassword" })
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const forgetPasswordController = async (req, res, next) => {
+    try {
+        const verifiedEmail = req.session.verifiedEmail
+        if (!verifiedEmail) {
+            return res.status(403).send("Not Access Verify otp")
+        }
+        const { password } = req.body
+        const user = await getUserByEmailService(verifiedEmail)
+        const hashPass = await hashPassword(password)
+        const newPass = { ...user[0], password: hashPass }
+        await updateUserService(user[0].id, newPass)
+        req.session.verifiedEmail = null
+        return res.status(200).send({ msg: "Password Update" })
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const chengePasswordController = async (req, res, next) => {
+    try {
+        const { oldPassword, password } = req.body
+        const currentUser = await getUserByEmailService(req.user.sub)
+        if (!currentUser) {
+            return res.status(404).send("User Not found")
+        }
+        const isEqual = await comparePass(oldPassword , currentUser[0].password)
+        if (!isEqual) {
+            return res.status(400).send("Eski parol Xato!")
+        }
+
+        const hashPass = await hashPassword(password)
+        const newPass = { ...currentUser[0], password: hashPass }
+        await updateUserService(currentUser[0].id, newPass)
+        return res.status(200).send({ msg: "Password Update" })
+    } catch (error) {
+        next(error)
+    }
+}
