@@ -4,8 +4,8 @@ const tableName = "address"
 export const AddressService = {
     create: async (data) => {
         try {
-            const res = await db(tableName).insert(data).returning("*")
-            if (!res || res.length == 0) {
+            const address = await db(tableName).insert(data).returning("*")
+            if (!address || address.length == 0) {
                 return {
                     success: false,
                     status: 500,
@@ -15,7 +15,7 @@ export const AddressService = {
             return {
                 success: true,
                 status: 200,
-                message: res[0],
+                message: address[0],
             }
         } catch (error) {
             throw new Error(error)
@@ -47,7 +47,7 @@ export const AddressService = {
             return {
                 success: true,
                 status: 200,
-                message: res,
+                message: address,
             }
         } catch (error) {
             throw new Error(error)
@@ -55,8 +55,8 @@ export const AddressService = {
     },
     getOne: async (id) => {
         try {
-            const res = await db(tableName).select("*").where("id", "=", id)
-            if (!res || res.length == 0) {
+            const address = await db(tableName).select("*").where("id", "=", id)
+            if (!address || address.length == 0) {
                 return {
                     success: false,
                     status: 404,
@@ -66,7 +66,7 @@ export const AddressService = {
             return {
                 success: true,
                 status: 200,
-                message: res[0],
+                message: address[0],
             }
         } catch (error) {
             throw new Error(error)
@@ -74,11 +74,11 @@ export const AddressService = {
     },
     update: async (id, data) => {
         try {
-            const res = await db(tableName)
+            const address = await db(tableName)
                 .update(data)
                 .where("id", "=", id)
                 .returning("*")
-            if (!res || res.length == 0) {
+            if (!address || address.length == 0) {
                 return {
                     success: false,
                     status: 404,
@@ -88,7 +88,7 @@ export const AddressService = {
             return {
                 success: true,
                 status: 200,
-                message: res[0],
+                message: address[0],
             }
         } catch (error) {
             throw new Error(error)
@@ -96,11 +96,11 @@ export const AddressService = {
     },
     delete: async (id) => {
         try {
-            const res = await db(tableName)
+            const address = await db(tableName)
                 .delete()
                 .where("id", "=", id)
                 .returning("*")
-            if (!res || res.length == 0) {
+            if (!address || address.length == 0) {
                 return {
                     success: false,
                     status: 404,
@@ -110,7 +110,7 @@ export const AddressService = {
             return {
                 success: true,
                 status: 200,
-                message: res[0],
+                message: address[0],
             }
         } catch (error) {
             throw new Error(error)

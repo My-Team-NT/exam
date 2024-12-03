@@ -10,7 +10,7 @@ export async function up(knex) {
         table.enum("type", ["VIP", "Standard", "Economy"]).notNullable()
         table.decimal("price", 14, 2).notNullable()
         table.string("currency", 3).notNullable()
-        table.string("seat_number").notNullable()
+        table.string("seat_number").notNullable().unique()
         table.enum("status", ["available", "sold", "reserved"]).notNullable()
         table.uuid("event_id").notNullable()
         table.timestamps(true, true)

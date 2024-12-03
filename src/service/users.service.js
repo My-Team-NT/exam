@@ -8,9 +8,9 @@ export const UserProfileService = (email) => {
     }
 }
 
-export const getAllUserService = () => {
+export const getAllUserService = (page, limit) => {
     try {
-        return db("users").select("*")
+        return db("users").select("*").limit(limit).offset(page)
     } catch (error) {
         throw new Error(error)
     }
@@ -19,14 +19,6 @@ export const getAllUserService = () => {
 export const getByIdUserService = (id) => {
     try {
         return db("users").select("*").where("id", "=", id)
-    } catch (error) {
-        throw new Error(error)
-    }
-}
-
-export const getPageUserService = (page, limit) => {
-    try {
-        return db("users").select("*").limit(limit).offset(page)
     } catch (error) {
         throw new Error(error)
     }

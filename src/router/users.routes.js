@@ -3,7 +3,6 @@ import {
     UserProfileController,
     getAllUserController,
     getByIdUserController,
-    getPageUserController,
     getFilterUserController,
     getSearchUserController,
     updateUserController,
@@ -14,7 +13,6 @@ import { cheackMiddleware, roleGuard } from "../middleware/index.js"
 export const userRouter = express.Router()
 
 userRouter.get("/profile", UserProfileController)
-userRouter.get("/page", roleGuard("admin"), getPageUserController)
 userRouter.get("/filter", roleGuard("admin"), getFilterUserController)
 userRouter.get("/search", roleGuard("admin"), getSearchUserController)
 userRouter.get("/", roleGuard("admin"), getAllUserController)
