@@ -15,6 +15,7 @@ export async function up(knex) {
         table.integer("total_tickets").notNullable()
         table.integer("available_tickets").notNullable()
         table.uuid("category_id").notNullable()
+        table.date("expire_at").notNullable()
         table.timestamps(true, true)
         table
             .foreign("category_id")

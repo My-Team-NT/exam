@@ -8,7 +8,6 @@ import {
     updateUserService,
     UserProfileService,
 } from "../service/users.service.js"
-import { hashPassword } from "../utils/index.js"
 import { logger } from "../utils/logger.js"
 
 export const UserProfileController = async (req, res, next) => {
@@ -22,7 +21,9 @@ export const UserProfileController = async (req, res, next) => {
 }
 export const getAllUserController = async (req, res, next) => {
     try {
-        const AllData = await getAllUserService()
+        const { page = 1, limit = 10 } = req.query
+        const skip = (page - 1) * limit
+        const AllData = await getAllUserService(skip, limit)
         return res.status(200).send({ status: "Success", data: AllData })
     } catch (error) {
         logger.error(error)
@@ -37,18 +38,6 @@ export const getByIdUserController = async (req, res, next) => {
             return res.status(404).send("MAlumot Topilmadi")
         }
         return res.status(200).send({ status: "Success", data: user })
-    } catch (error) {
-        logger.error(error)
-        next(error)
-    }
-}
-
-export const getPageUserController = async (req, res, next) => {
-    try {
-        const { page, limit } = req.query
-        const skip = (page - 1) * limit
-        const AllData = await getPageUserService(skip, limit)
-        return res.status(200).send({ status: "Success", data: AllData })
     } catch (error) {
         logger.error(error)
         next(error)
