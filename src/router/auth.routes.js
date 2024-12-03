@@ -4,6 +4,7 @@ import {
     forgetPasswordController,
     googlePassportRegisterController,
     loginController,
+    refreshToken,
     registerController,
     sendForgetPasswordOtpController,
     verifyOtpController,
@@ -11,7 +12,7 @@ import {
 } from "../controller/auth.controller.js"
 import passport from "passport"
 import "../strategies/passport-google.js"
-import { authGuard } from "../middleware/index.js"
+import { authGuard} from "../middleware/index.js"
 
 export const authRouter = Router()
 
@@ -34,3 +35,4 @@ authRouter.post('/send-forget-password-otp' , sendForgetPasswordOtpController)
 authRouter.post('/verifyOtp', verifyOtpController)
 authRouter.post('/forgetPassword', forgetPasswordController)
 authRouter.post('/changePassword', authGuard ,chengePasswordController)
+authRouter.post('/refreshToken' , refreshToken)

@@ -4,9 +4,11 @@ import {
     hashPassword,
     otpGenerate,
     refreshTokenSing,
+    refreshTokenVerify,
     sendMail,
 } from "../utils/index.js"
 import {
+    chengePasswordValidation,
     googleValidation,
     loginValidation,
     otpValidation,
@@ -162,11 +164,14 @@ export const verifyTokenController = async (req, res, next) => {
 
 export const sendForgetPasswordOtpController = async (req, res, next) => {
     try {
-        let email;
+        let email
         if (req.user && req.user.sub) {
             email = req.user.sub
         } else {
             email = req.body.email
+            if(!email){
+                return res.status(400).send('Email Must heve')
+            }
         }
         const currentUser = await getUserByEmailService(email)
         if (!currentUser) {
@@ -205,6 +210,9 @@ export const verifyOtpController = async (req, res, next) => {
             })
         }
         const { otp } = req.body
+        if(!otp){
+            return res.status(400).send('Otp must heve')
+        }
         const currentOtp = await getOtpService(req.session.confirumPassword)
         if (!currentOtp) {
             return res.status(404).send("Otp code topilmadi")
@@ -233,6 +241,9 @@ export const forgetPasswordController = async (req, res, next) => {
             return res.status(403).send("Not Access Verify otp")
         }
         const { password } = req.body
+        if(!password){
+            return res.status(400).send('Password must Heve')
+        }
         const user = await getUserByEmailService(verifiedEmail)
         const hashPass = await hashPassword(password)
         const newPass = { ...user[0], password: hashPass }
@@ -246,12 +257,16 @@ export const forgetPasswordController = async (req, res, next) => {
 
 export const chengePasswordController = async (req, res, next) => {
     try {
+        const {error} = chengePasswordValidation(req.body)
+        if(error){
+            return res.status(400).send({msg:'Malumotlarni Togri kiriting '})
+        }
         const { oldPassword, password } = req.body
         const currentUser = await getUserByEmailService(req.user.sub)
         if (!currentUser) {
             return res.status(404).send("User Not found")
         }
-        const isEqual = await comparePass(oldPassword , currentUser[0].password)
+        const isEqual = await comparePass(oldPassword, currentUser[0].password)
         if (!isEqual) {
             return res.status(400).send("Eski parol Xato!")
         }
@@ -260,6 +275,19 @@ export const chengePasswordController = async (req, res, next) => {
         const newPass = { ...currentUser[0], password: hashPass }
         await updateUserService(currentUser[0].id, newPass)
         return res.status(200).send({ msg: "Password Update" })
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const refreshToken = async (req, res, next) => {
+    try {
+        const { token } = req.body
+        if(!token){
+            return res.status(404).send('Refresh token must heve')
+        }
+        const newToken = await refreshTokenVerify(token)
+        return res.status(200).send({accessToken:newToken.accessToken , refreshToken:newToken.refreshToken})
     } catch (error) {
         next(error)
     }
