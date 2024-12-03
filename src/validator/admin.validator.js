@@ -10,7 +10,8 @@ export const adminValidation = (data) => {
         password: Joi.string()
             .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
             .required(),
-        role: Joi.string().valid(['admin', 'user']).default('user'),
+        role: Joi.string().valid('admin', 'user').default('user'),
+        is_active: Joi.boolean().default(true),
         phone: Joi.string().required(),
         birth_date: Joi.date().required(),
     })

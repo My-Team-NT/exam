@@ -24,7 +24,7 @@ export const CartItemService = {
                 return {
                     success: false,
                     status: 404,
-                    message: "cart_id topilmadi",
+                    message: "ticket_id topilmadi",
                 }
             }
 

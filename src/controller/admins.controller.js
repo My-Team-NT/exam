@@ -12,10 +12,7 @@ export const AdminController = {
     create: async (req, res, next) => {
         try {
             const data = req.validatedData
-            const result = await AdminService.create({
-                user_id: req.user.id,
-                ...data,
-            })
+            const result = await AdminService.create(data)
             responseHandler(result, res)
         } catch (error) {
             logger.error(error)
@@ -46,8 +43,7 @@ export const AdminController = {
     update: async (req, res, next) => {
         try {
             const id = req.params.id
-            const data = req.validatedData
-            const result = await AdminService.update(id, data)
+            const result = await AdminService.update(id)
             responseHandler(result, res)
         } catch (error) {
             logger.error(error)
