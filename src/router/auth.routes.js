@@ -1,12 +1,17 @@
 import { Router } from "express"
 import {
+    chengePasswordController,
+    forgetPasswordController,
     googlePassportRegisterController,
     loginController,
     registerController,
+    sendForgetPasswordOtpController,
+    verifyOtpController,
     verifyTokenController,
 } from "../controller/auth.controller.js"
 import passport from "passport"
 import "../strategies/passport-google.js"
+import { authGuard } from "../middleware/index.js"
 
 export const authRouter = Router()
 
@@ -22,6 +27,10 @@ authRouter.get(
     }),
     googlePassportRegisterController,
 )
-authRouter.post("/register", registerController)
-authRouter.post("/login", loginController)
-authRouter.post("/verifyToken", verifyTokenController)
+authRouter.post('/register', registerController)
+authRouter.post('/login', loginController)
+authRouter.post('/verifyToken', verifyTokenController)
+authRouter.post('/send-forget-password-otp' , sendForgetPasswordOtpController)
+authRouter.post('/verifyOtp', verifyOtpController)
+authRouter.post('/forgetPassword', forgetPasswordController)
+authRouter.post('/changePassword', authGuard ,chengePasswordController)

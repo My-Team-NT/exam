@@ -1,6 +1,6 @@
 import db from "../database/index.js"
 
-const tableName = "categorys"
+const tableName = "categories"
 export const CategoryService = {
     create: async (data) => {
         try {

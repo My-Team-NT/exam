@@ -90,9 +90,7 @@ export const updateUserController = async (req, res, next) => {
             return res.status(404).send("Malumot Topilmadi")
         }
         if (req.body.password) {
-            const hashPass = await hashPassword(req.body.password)
-            const newUserData = { ...user[0], ...req.body, password: hashPass }
-            const newUser = await updateUserService(req.params.id, newUserData)
+            return res.status(403).send('Not Access')
         } else {
             const newUserData = { ...user[0], ...req.body }
             const newUser = await updateUserService(req.params.id, newUserData)

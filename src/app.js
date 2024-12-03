@@ -1,11 +1,24 @@
 import express from "express"
+import session from 'express-session'
 import morgan from "morgan"
 import { indexRouter } from "./router/index.routes.js"
+import { config } from "./config/index.js"
 
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan("dev"))
+app.use(
+    session({
+        secret: config.session.secret, // Sessiya uchun maxfiy kalit (uni murakkabroq tanlang)
+        resave: false, // Har bir so'rovda sessiyani qayta saqlamaydi
+        saveUninitialized: true, // Yangi sessiyalarni avtomatik saqlaydi
+        cookie: { 
+            secure: false, // HTTPS ishlatmayotgan bo'lsangiz, `false` qoldiring
+            maxAge: 1000 * 60 * 10 // 15 daqiqa (millisekundda) sessiya muddati
+        },
+    })
+);
 
 app.use("/api/v1", indexRouter)
 
