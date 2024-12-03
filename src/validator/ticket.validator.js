@@ -16,7 +16,7 @@ export const ticketValidator = (ticket) => {
                     `"type" faqat quyidagi qiymatlardan biri bo'lishi kerak: "VIP", "Standard", "Economy"`,
                 "any.required": `"type" maydoni talab qilinadi`,
             }),
-        price: Joi.number().precision(2).required().messages({
+        price: Joi.number().precision(2).greater(0).required().messages({
             "number.base": `"price" raqam bo'lishi kerak`,
             "number.precision": '"price" 2 ta kasr raqamidan oshmasligi kerak',
             "any.required": '"price" maydoni talab qilinadi',

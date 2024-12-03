@@ -48,3 +48,11 @@ export const otpValidation = (data) => {
     })
     return validation.validate(data)
 }
+
+export const chengePasswordValidation = (data) => {
+    const validation = Joi.object({
+        oldPassword: Joi.string().required(),
+        password: Joi.string().required(),
+    })
+    return validation.validate(data)
+}
