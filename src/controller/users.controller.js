@@ -3,7 +3,6 @@ import {
     getAllUserService,
     getByIdUserService,
     getFilterUserService,
-    getPageUserService,
     getSearchUserService,
     updateUserService,
     UserProfileService,
