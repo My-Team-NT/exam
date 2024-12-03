@@ -11,3 +11,4 @@ export * from "./promocode.routes.js"
 export * from "./ticket.routes.js"
 export * from "./users.routes.js"
 export * from "./wishlist.routes.js"
+export * from './admin.routes.js'

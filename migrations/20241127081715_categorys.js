@@ -1,4 +1,4 @@
-const tableName = "categorys"
+const tableName = "categories"
 
 /**
  * @param { import("knex").Knex } knex
