@@ -20,7 +20,12 @@ app.use(
     })
 );
 
+app.get("/server",(req,res) => {
+    res.send("server running")
+})
+
 app.use("/api/v1", indexRouter)
+
 
 app.use((req, res) => {
     res.status(404).send("Not found")
