@@ -21,9 +21,18 @@ export const PaymentController = {
     },
     getAll: async (req, res, next) => {
         try {
-            const page = req.query.page || 1
-            const limit = req.query.limit || 10
-            const result = await PaymentService.getAll(page, limit)
+            const page = req.query.page
+            const limit = req.query.limit 
+            let key;
+            if(!page && !limit){
+                key = String(Object.keys(req.query)[0])
+            }else if(!page || !limit){
+                key = String(Object.keys(req.query)[1])
+            }
+            else{
+                key = String(Object.keys(req.query)[2])
+            }
+            const result = await PaymentService.getAll(page, limit, key , req.query[key])
             responseHandler(result, res)
         } catch (error) {
             logger.error(error)
