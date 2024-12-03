@@ -22,13 +22,23 @@ export const FeedBackService = {
             throw new Error(error)
         }
     },
-    getAll: async (page, limit) => {
+    getAll: async (page=1, limit=10, name , value) => {
         try {
             const offset = (page - 1) * limit
-            const res = await db(tableName)
+            let res;
+            if (name && value){
+                res = await db(tableName)
+                .select("*")
+                .where(name, "ILIKE", `%${value}%`)
+                .limit(limit)
+                .offset(offset)
+            }
+            else{
+                res = await db(tableName)
                 .select("*")
                 .limit(limit)
                 .offset(offset)
+            }
             if (!res || res.length == 0) {
                 return {
                     success: false,
