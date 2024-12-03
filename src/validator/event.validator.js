@@ -46,6 +46,11 @@ export const eventValidator = (event) => {
             "string.uuid": `"category_id" UUID formatida bo'lishi kerak`,
             "any.required": `"category_id" maydoni talab qilinadi`,
         }),
+        expire_at: Joi.date().required().messages({
+            "date.base": `"date" to'g'ri sana formatida bo'lishi kerak`,
+            "string.empty": `"expire_at" bo'sh bo'lishi mumkin emas`,
+            "any.required": `"expire_at" maydoni talab qilinadi`,
+        }),
     })
 
     return schema.validate(event, { abortEarly: false })
